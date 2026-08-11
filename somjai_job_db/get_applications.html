@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>รายชื่อผู้สมัครงาน — สมใจ 2559</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&family=Bebas+Neue&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --red-700: #b30000;
+            --red-600: #cc0000;
+            --red-500: #e00000;
+            --red-400: #ff2222;
+            --red-100: #ffe0e0;
+            --red-50: #fff5f5;
+            --dark-900: #1a0000;
+            --dark-800: #2d0000;
+            --text-dark: #1a0000;
+            --text-mid: #5a2020;
+            --text-muted: #8a4545;
+            --border: #f0cccc;
+            --bg: #f8f2f2;
+            --card: #ffffff;
+            --font: 'Sarabun', sans-serif;
+            --font-d: 'Bebas Neue', cursive;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text-dark);
+            min-height: 100vh;
+        }
+
+        /* ── NAVBAR ── */
+        .navbar {
+            background: var(--dark-900);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 28px;
+            height: 52px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar img {
+            height: 38px;
+            display: block;
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-user {
+            font-size: 0.82rem;
+            color: rgba(255, 255, 255, 0.55);
+        }
+
+        .nav-user strong {
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .logout-btn {
+            padding: 6px 14px;
+            border-radius: 100px;
+            border: 1.5px solid rgba(255, 255, 255, 0.15);
+            background: transparent;
+            color: rgba(255, 255, 255, 0.6);
+            font-family: var(--font);
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all .18s;
+        }
+
+        .logout-btn:hover {
+            border-color: var(--red-400);
+            color: var(--red-300, #ff6666);
+        }
+
+        /* ── PAGE ── */
+        .page {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px 20px 60px;
+        }
+
+        /* ── FILTER BAR ── */
+        .filter-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 16px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            gap: 12px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .filter-group label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .f-input {
+            padding: 8px 12px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-family: var(--font);
+            font-size: 0.88rem;
+            background: #fff;
+            outline: none;
+            transition: border-color .18s;
+            color: var(--text-dark);
+        }
+
+        .f-input:focus {
+            border-color: var(--red-500);
+            box-shadow: 0 0 0 3px rgba(200, 0, 0, 0.08);
+        }
+
+        .search-group {
+            flex: 1;
+            min-width: 220px;
+        }
+
+        .search-wrap {
+            position: relative;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: .85rem;
+            opacity: .4;
+            pointer-events: none;
+        }
+
+        .search-wrap .f-input {
+            padding-left: 32px;
+            width: 100%;
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 8px;
+            align-items: flex-end;
+        }
+
+        .btn {
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-family: var(--font);
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1.5px solid var(--border);
+            background: #fff;
+            color: var(--text-mid);
+            transition: all .18s;
+        }
+
+        .btn:hover {
+            border-color: var(--red-400);
+            color: var(--red-600);
+        }
+
+        .btn-primary {
+            background: var(--red-600);
+            border-color: var(--red-600);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(200, 0, 0, 0.25);
+        }
+
+        .btn-primary:hover {
+            background: var(--red-500);
+            border-color: var(--red-500);
+        }
+
+        .btn-sm {
+            padding: 5px 12px;
+            font-size: 0.8rem;
+        }
+
+        /* ── TABLE CARD ── */
+        .table-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .table-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(135deg, var(--red-50), #fff);
+        }
+
+        .table-title {
+            font-family: var(--font-d);
+            font-size: 1.3rem;
+            letter-spacing: 2px;
+            color: var(--red-700);
+        }
+
+        .total-chip {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            background: var(--red-50);
+            border: 1px solid var(--red-100);
+            padding: 4px 12px;
+            border-radius: 100px;
+        }
+
+        /* ── TABLE ── */
+        .table-scroll {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+        }
+
+        thead {
+            background: #fdf6f6;
+        }
+
+        th {
+            padding: 11px 14px;
+            text-align: left;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: .5px;
+            color: var(--text-mid);
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        th:hover {
+            color: var(--red-600);
+        }
+
+        th .arr {
+            margin-left: 3px;
+            opacity: .35;
+            font-size: .68rem;
+        }
+
+        th.sorted .arr {
+            opacity: 1;
+            color: var(--red-600);
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #faf0f0;
+            transition: background .13s;
+        }
+
+        tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            background: var(--red-50);
+        }
+
+        td {
+            padding: 11px 14px;
+            font-size: 0.875rem;
+            vertical-align: middle;
+        }
+
+        .avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: var(--red-100);
+            border: 2px solid var(--red-200);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .8rem;
+            font-weight: 700;
+            color: var(--red-700);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .name-cell {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .name-main {
+            font-weight: 600;
+        }
+
+        .name-sub {
+            font-size: .75rem;
+            color: var(--text-muted);
+            margin-top: 1px;
+        }
+
+        /* STATUS */
+        .badge {
+            display: inline-block;
+            padding: 3px 9px;
+            border-radius: 100px;
+            font-size: .72rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .s-รับเรื่อง {
+            background: #e8f4fd;
+            color: #1565c0;
+        }
+
+        .s-สัมภาษณ์ {
+            background: #fff8e1;
+            color: #f57f17;
+        }
+
+        .s-ผ่าน {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .s-ไม่ผ่าน {
+            background: #fce4ec;
+            color: #c62828;
+        }
+
+        .s-สำรอง {
+            background: #f3e5f5;
+            color: #6a1b9a;
+        }
+
+        /* ACTION BUTTONS */
+        .act-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: .85rem;
+            transition: all .15s;
+            text-decoration: none;
+        }
+
+        .act-btn:hover {
+            border-color: var(--red-400);
+            background: var(--red-50);
+            transform: scale(1.05);
+        }
+
+        /* ── PAGINATION ── */
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 18px;
+            border-top: 1px solid var(--border);
+            font-size: .82rem;
+            color: var(--text-muted);
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .page-btns {
+            display: flex;
+            gap: 4px;
+        }
+
+        .pbtn {
+            min-width: 30px;
+            height: 30px;
+            padding: 0 6px;
+            border-radius: 6px;
+            border: 1.5px solid var(--border);
+            background: #fff;
+            font-family: var(--font);
+            font-size: .82rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .15s;
+            color: var(--text-mid);
+        }
+
+        .pbtn:hover:not(:disabled) {
+            border-color: var(--red-400);
+            color: var(--red-600);
+        }
+
+        .pbtn.active {
+            background: var(--red-600);
+            border-color: var(--red-600);
+            color: #fff;
+        }
+
+        .pbtn:disabled {
+            opacity: .35;
+            cursor: not-allowed;
+        }
+
+        /* ── EMPTY / LOADING ── */
+        .tstate {
+            padding: 50px;
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        .tstate .ico {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .dots {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--red-400);
+            animation: db 1.2s ease-in-out infinite;
+        }
+
+        .dot:nth-child(2) {
+            animation-delay: .2s
+        }
+
+        .dot:nth-child(3) {
+            animation-delay: .4s
+        }
+
+        @keyframes db {
+
+            0%,
+            80%,
+            100% {
+                transform: scale(.6);
+                opacity: .4
+            }
+
+            40% {
+                transform: scale(1);
+                opacity: 1
+            }
+        }
+
+        @media(max-width:600px) {
+            .filter-card {
+                gap: 8px;
+            }
+
+            .search-group {
+                min-width: 100%;
+            }
+
+            .navbar {
+                padding: 0 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR --> 
+    <nav class="navbar">
+        <div></div>
+        <div class="navbar-right">
+            <span class="nav-user">สวัสดี, <strong id="navUser">—</strong></span>
+            <button class="logout-btn" id="logoutBtn">⏏ ออกจากระบบ</button>
+        </div>
+    </nav>
+
+    <div class="page">
+
+        <!-- FILTER -->
+        <div class="filter-card">
+            <div class="filter-group search-group">
+                <label>ค้นหา</label>
+                <div class="search-wrap">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="searchInput" class="f-input"
+                        placeholder="ชื่อ, เบอร์โทร, ชื่อเล่น, ตำแหน่งงาน..." />
+                </div>
+            </div>
+            <div class="filter-group">
+                <label>วันที่สมัคร (จาก)</label>
+                <input type="date" id="dateFrom" class="f-input" />
+            </div>
+            <div class="filter-group">
+                <label>วันที่สมัคร (ถึง)</label>
+                <input type="date" id="dateTo" class="f-input" />
+            </div>
+            <div class="filter-actions">
+                <button class="btn btn-primary" id="searchBtn">🔍 ค้นหา</button>
+                <button class="btn" id="resetBtn">↺ ล้าง</button>
+            </div>
+        </div>
+
+        <!-- TABLE -->
+        <div class="table-card">
+            <div class="table-header">
+                <div class="table-title">รายชื่อผู้สมัครงาน</div>
+                <span class="total-chip" id="totalChip">โหลด...</span>
+            </div>
+
+            <div class="table-scroll">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width:40px">#</th>
+                            <th data-sort="full_name">ชื่อ-นามสกุล <span class="arr">↕</span></th>
+                            <th data-sort="position1">ตำแหน่งที่สมัคร 1 <span class="arr">↕</span></th>
+                            <th>ตำแหน่งที่สมัคร 2</th>
+                            <th data-sort="expected_salary">เงินเดือน <span class="arr">↕</span></th>
+                            <th data-sort="submitted_at">วันที่สมัคร <span class="arr">↕</span></th>
+                            <th style="width:60px;text-align:center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody"></tbody>
+                </table>
+            </div>
+
+            <div class="pagination" id="pag" style="display:none">
+                <span id="pagInfo"></span>
+                <div class="page-btns" id="pagBtns"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const API = '/SomjaiJobDB/backend';
+        const token = localStorage.getItem('token');
+        const user = JSON.parse(localStorage.getItem('user') || 'null');
+
+        if (!token) location.href = 'login.html';
+        if (user) document.getElementById('navUser').textContent = user.full_name || user.username;
+
+        // logout
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            await fetch(`${API}/logout.php`, { method: 'POST', headers: { 'Authorization': 'Bearer ' + token } }).catch(() => { });
+            localStorage.clear();
+            location.href = 'login.html';
+        });
+
+        // ── State ─────────────────────────────────────────────────────
+        let state = {
+            page: 1, limit: 20, total: 0, totalPages: 1,
+            search: '', status: '', position: '', dateFrom: '', dateTo: '',
+            sortBy: 'submitted_at', sortDir: 'DESC',
+        };
+
+        // ── Sort ──────────────────────────────────────────────────────
+        document.querySelectorAll('th[data-sort]').forEach(th => {
+            th.addEventListener('click', () => {
+                const col = th.dataset.sort;
+                state.sortDir = (state.sortBy === col && state.sortDir === 'DESC') ? 'ASC' : 'DESC';
+                state.sortBy = col; state.page = 1;
+                document.querySelectorAll('th[data-sort]').forEach(t => { t.classList.remove('sorted'); t.querySelector('.arr').textContent = '↕'; });
+                th.classList.add('sorted');
+                th.querySelector('.arr').textContent = state.sortDir === 'DESC' ? '↓' : '↑';
+                load();
+            });
+        });
+
+        // ── Search ────────────────────────────────────────────────────
+        // ── Debounce helper ──────────────────────────────────────────
+        function debounce(fn, delay) {
+            let timer;
+            return (...args) => {
+                clearTimeout(timer);
+                timer = setTimeout(() => fn(...args), delay);
+            };
+        }
+
+        const debouncedSearch = debounce(doSearch, 400);
+
+        // Real-time search on typing
+        document.getElementById('searchInput').addEventListener('input', debouncedSearch);
+        document.getElementById('dateFrom').addEventListener('change', doSearch);
+        document.getElementById('dateTo').addEventListener('change', doSearch);
+
+        // Enter key support
+        document.getElementById('searchInput').addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+
+        // Click button
+        document.getElementById('searchBtn').addEventListener('click', doSearch);
+
+        // Reset
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            ['searchInput', 'dateFrom', 'dateTo'].forEach(id => document.getElementById(id).value = '');
+            Object.assign(state, { search: '', status: '', position: '', dateFrom: '', dateTo: '', page: 1 });
+            load();
+        });
+
+        function doSearch() {
+            state.search = document.getElementById('searchInput')?.value.trim() || '';
+            state.position = '';
+            state.dateFrom = document.getElementById('dateFrom')?.value || '';
+            state.dateTo = document.getElementById('dateTo')?.value || '';
+            state.page = 1;
+            load();
+        }
+
+        // ── Load ──────────────────────────────────────────────────────
+        async function load() {
+            showLoading();
+            const p = new URLSearchParams({ page: state.page, limit: state.limit, sort_by: state.sortBy, sort_dir: state.sortDir });
+            if (state.search) p.set('search', state.search);
+            if (state.status) p.set('status', state.status);
+            if (state.position) p.set('position', state.position);
+            if (state.dateFrom) p.set('date_from', state.dateFrom);
+            if (state.dateTo) p.set('date_to', state.dateTo);
+
+            try {
+                const res = await fetch(`${API}/get_applications.php?${p}`, { headers: { 'Authorization': 'Bearer ' + token } });
+                const json = await res.json();
+                if (!json.success) { if (res.status === 401) { location.href = 'login.html'; return; } showErr(json.error); return; }
+                state.total = json.total; state.totalPages = json.total_pages;
+                document.getElementById('totalChip').textContent = `ทั้งหมด ${json.total} รายการ`;
+                renderRows(json.data);
+                renderPag();
+            } catch (e) { showErr('โหลดข้อมูลไม่สำเร็จ'); console.error(e); }
+        }
+
+        // ── Render rows ───────────────────────────────────────────────
+        function renderRows(rows) {
+            const tb = document.getElementById('tbody');
+            if (!rows.length) {
+                tb.innerHTML = `<tr><td colspan="6"><div class="tstate"><div class="ico">📭</div><p>ไม่พบข้อมูล</p></div></td></tr>`;
+                return;
+            }
+            const off = (state.page - 1) * state.limit;
+            tb.innerHTML = rows.map((r, i) => {
+                const sal = r.expected_salary ? Number(r.expected_salary).toLocaleString('th-TH') + ' ฿' : '—';
+                const dt = r.submitted_at ? new Date(r.submitted_at).toLocaleDateString('th-TH', { day: '2-digit', month: 'short', year: '2-digit' }) : '—';
+
+                return `
+      <tr>
+        <td style="color:var(--text-muted);font-size:.78rem">${off + i + 1}</td>
+        <td>
+          <div class="name-cell">
+            <div>
+              <div class="name-main">${r.full_name || '—'}</div>
+              <div class="name-sub">📞 ${r.phone || '—'} | ${r.nickname || ''}</div>
+            </div>
+          </div>
+        </td>
+        <td>${r.position1 || '—'}</td>
+        <td style="color:var(--text-muted);font-size:.88rem">${r.position2 || ''}</td>
+        <td>${sal}</td>
+        <td style="font-size:.82rem;color:var(--text-muted)">${dt}</td>
+        <td style="text-align:center">
+          <a href="application_detail.html?id=${r.id}" class="act-btn" title="ดูรายละเอียด" target="_blank">👁️</a>
+        </td>
+      </tr>`;
+            }).join('');
+        }
+
+        // ── Pagination ────────────────────────────────────────────────
+        function renderPag() {
+            const pag = document.getElementById('pag');
+            if (!state.total) { pag.style.display = 'none'; return; }
+            pag.style.display = 'flex';
+            const s = (state.page - 1) * state.limit + 1, e = Math.min(state.page * state.limit, state.total);
+            document.getElementById('pagInfo').textContent = `แสดง ${s}–${e} จาก ${state.total} รายการ`;
+            let html = `<button class="pbtn" onclick="goPage(${state.page - 1})" ${state.page <= 1 ? 'disabled' : ''}>‹</button>`;
+            pageRange(state.page, state.totalPages).forEach(p => {
+                html += p === '...'
+                    ? `<button class="pbtn" disabled>…</button>`
+                    : `<button class="pbtn ${p === state.page ? 'active' : ''}" onclick="goPage(${p})">${p}</button>`;
+            });
+            html += `<button class="pbtn" onclick="goPage(${state.page + 1})" ${state.page >= state.totalPages ? 'disabled' : ''}>›</button>`;
+            document.getElementById('pagBtns').innerHTML = html;
+        }
+
+        function pageRange(c, t) {
+            if (t <= 7) return Array.from({ length: t }, (_, i) => i + 1);
+            if (c <= 4) return [1, 2, 3, 4, 5, '...', t];
+            if (c >= t - 3) return [1, '...', t - 4, t - 3, t - 2, t - 1, t];
+            return [1, '...', c - 1, c, c + 1, '...', t];
+        }
+        function goPage(p) { if (p < 1 || p > state.totalPages) return; state.page = p; load(); scrollTo({ top: 0, behavior: 'smooth' }); }
+
+        function showLoading() {
+            document.getElementById('tbody').innerHTML = `<tr><td colspan="6"><div class="tstate"><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div><p style="margin-top:10px">กำลังโหลด...</p></div></td></tr>`;
+            document.getElementById('pag').style.display = 'none';
+        }
+        function showErr(msg) {
+            document.getElementById('tbody').innerHTML = `<tr><td colspan="6"><div class="tstate"><div class="ico">⚠️</div><p>${msg}</p></div></td></tr>`;
+        }
+
+        load();
+    </script>
+</body>
+
+</html>

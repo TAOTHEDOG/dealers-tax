@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ใบสมัครงาน</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --red-700: #b30000;
+            --red-600: #cc0000;
+            --red-500: #e00000;
+            --red-100: #ffe0e0;
+            --red-50: #fff5f5;
+            --dark-900: #1a0000;
+            --dark-800: #2d0000;
+            --border: #ccc;
+            --font: 'Sarabun', sans-serif;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font);
+            background: #f0eded;
+            color: #111;
+            font-size: 13px;
+        }
+
+        /* ── NAVBAR ── */
+        .navbar {
+            background: var(--dark-900);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            height: 50px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .25);
+        }
+
+        .navbar img {
+            height: 36px;
+        }
+
+        .nav-btns {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nbtn {
+            padding: 6px 16px;
+            border-radius: 6px;
+            font-family: var(--font);
+            font-size: .82rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1.5px solid rgba(255, 255, 255, .2);
+            background: transparent;
+            color: rgba(255, 255, 255, .7);
+            transition: all .18s;
+        }
+
+        .nbtn:hover {
+            border-color: var(--red-400, #ff2222);
+            color: #fff;
+        }
+
+        .nbtn.primary {
+            background: var(--red-600);
+            border-color: var(--red-600);
+            color: #fff;
+        }
+
+        .nbtn.primary:hover {
+            background: var(--red-500);
+        }
+
+        /* ── PAGE ── */
+        .page {
+            max-width: 820px;
+            margin: 24px auto 60px;
+            padding: 0 16px;
+        }
+
+        /* ── DOCUMENT ── */
+        .doc {
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, .08);
+        }
+
+        /* ── DOC HEADER ── */
+        .company-names {
+            font-size: 11px;
+            font-weight: 600;
+            color: #333;
+            line-height: 1.8;
+        }
+
+        .doc-title {
+            font-size: 20px;
+            font-weight: 800;
+            text-align: center;
+            flex: 1;
+            padding: 0 16px;
+        }
+
+        .photo-box {
+            width: 110px;
+            height: 135px;
+            border: 1px solid #aaa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f5f5f5;
+            font-size: .7rem;
+            color: #999;
+            text-align: center;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .photo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .doc-header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 10px 14px 8px;
+            border-bottom: 2px solid #111;
+        }
+
+        .doc-header-left {
+            width: 160px;
+            flex-shrink: 0;
+        }
+
+        .doc-header-center {
+            flex: 1;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0 8px;
+        }
+
+        .photo-wrap {
+            width: 160px;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        /* ── SECTIONS ── */
+        .sec {
+            border: 1px solid var(--border);
+            border-top: none;
+            padding: 8px 12px;
+        }
+
+        .sec:first-of-type {
+            border-top: 1px solid var(--border);
+        }
+
+        .sec-title {
+            font-weight: 700;
+            font-size: 12px;
+            margin-bottom: 6px;
+            color: #111;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2px 16px;
+            margin-bottom: 4px;
+            line-height: 1.7;
+        }
+
+        .row span {
+            font-size: 12px;
+        }
+
+        .lbl {
+            color: #555;
+            font-size: 11.5px;
+        }
+
+        .val {
+            font-weight: 600;
+            font-size: 12px;
+            border-bottom: 1px dotted #999;
+            min-width: 60px;
+            display: inline-block;
+            padding: 0 2px;
+        }
+
+        .val.wide {
+            min-width: 140px;
+        }
+
+        .val.xwide {
+            min-width: 200px;
+        }
+
+        /* ── CHECKBOX ROW ── */
+        .chk-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 20px;
+            margin-bottom: 4px;
+            align-items: center;
+        }
+
+        .chk-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+        }
+
+        .chk-box {
+            width: 14px;
+            height: 14px;
+            border: 1.5px solid #555;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            flex-shrink: 0;
+        }
+
+        .chk-box.checked {
+            border-color: #111;
+        }
+
+        .chk-box.checked::after {
+            content: '✓';
+            font-weight: 900;
+            font-size: 11px;
+        }
+
+        /* ── SKILL SCALE ── */
+        .skill-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 4px;
+            font-size: 11px;
+        }
+
+        .skill-table th,
+        .skill-table td {
+            padding: 2px 4px;
+            text-align: center;
+            border: 1px solid #ccc;
+        }
+
+        .skill-table th {
+            background: #f0f0f0;
+            font-size: 10.5px;
+        }
+
+        .skill-table td.skill-label {
+            text-align: left;
+            font-weight: 600;
+            width: 120px;
+        }
+
+        .skill-dot {
+            width: 20px;
+            text-align: center;
+        }
+
+        .skill-dot.active {
+            font-weight: 900;
+            font-size: 14px;
+        }
+
+        /* ── WORK HISTORY ── */
+        .work-block {
+            border: 1px solid #ccc;
+            border-top: none;
+            padding: 8px 12px;
+        }
+
+        .work-num {
+            font-weight: 700;
+            font-size: 11px;
+            color: var(--red-700);
+            margin-bottom: 4px;
+        }
+
+        /* ── FOOTER ── */
+        .doc-footer {
+            border: 1px solid var(--border);
+            border-top: none;
+            padding: 10px 12px;
+            font-size: 11px;
+        }
+
+        .footer-terms {
+            line-height: 1.7;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .footer-terms p {
+            margin-bottom: 4px;
+        }
+
+        .sig-row {
+            display: flex;
+            justify-content: flex-end;
+            gap: 40px;
+            margin-top: 12px;
+        }
+
+        .sig-box {
+            text-align: center;
+            font-size: 11px;
+        }
+
+        .sig-line {
+            border-bottom: 1px solid #555;
+            width: 180px;
+            margin-bottom: 3px;
+            height: 20px;
+        }
+
+        /* ── LOADING ── */
+        .loading {
+            padding: 80px;
+            text-align: center;
+            color: #999;
+        }
+
+        .dots {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--red-400, #ff2222);
+            animation: db 1.2s ease-in-out infinite;
+        }
+
+        .dot:nth-child(2) {
+            animation-delay: .2s
+        }
+
+        .dot:nth-child(3) {
+            animation-delay: .4s
+        }
+
+        @keyframes db {
+
+            0%,
+            80%,
+            100% {
+                transform: scale(.6);
+                opacity: .4
+            }
+
+            40% {
+                transform: scale(1);
+                opacity: 1
+            }
+        }
+
+        @media print {
+            @page {
+                margin: 10mm;
+                size: A4;
+            }
+
+            html,
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .navbar,
+            .status-bar,
+            .nbtn {
+                display: none !important;
+            }
+
+            body {
+                background: #fff;
+            }
+
+            .page {
+                margin: 0;
+                max-width: 100%;
+                padding: 0;
+            }
+
+            .doc {
+                border: none;
+                box-shadow: none;
+            }
+
+            .page-break {
+                page-break-before: always;
+            }
+
+            .no-break {
+                page-break-inside: avoid;
+            }
+        }
+
+        @media screen {
+            .page-break {
+                border-top: 3px dashed #cc0000;
+                margin-top: 24px;
+                padding-top: 4px;
+                position: relative;
+            }
+
+            .page-break::before {
+                content: '— แบ่งหน้า —';
+                position: absolute;
+                top: -10px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: #fff;
+                padding: 0 8px;
+                font-size: 11px;
+                color: #cc0000;
+                font-weight: 600;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div></div>
+        <div class="nav-btns">
+            <button class="nbtn" onclick="window.close()">← กลับ</button>
+            <button class="nbtn" onclick="doPrint()">🖨 พิมพ์</button>
+        </div>
+    </nav>
+
+    <div class="page">
+
+        <!-- LOADING -->
+        <div id="loadingEl" class="loading doc">
+            <div class="dots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+            <div>กำลังโหลดข้อมูล...</div>
+        </div>
+
+        <!-- DOCUMENT (hidden until loaded) -->
+        <div id="docEl" class="doc" style="display:none">
+
+            <!-- DOC HEADER -->
+            <div class="doc-header-top">
+                <div class="doc-header-left">
+                    <div class="company-names" style="font-size:11px;font-weight:600;color:#333;line-height:1.8">
+                        บ.ซีเจเคมาร์เก็ทติ้งจำกัด<br />
+                        บ.สมใจ 2559<br />
+                        บ.ชัยรักมอเตอร์ จำกัด
+                    </div>
+                </div>
+                <div class="doc-header-center">
+                    <div class="doc-title" style="font-size:20px;font-weight:800;">ใบสมัครงาน</div>
+                    <div id="submittedAt" style="font-size:11px;font-weight:400;color:#666;margin-top:2px;"></div>
+                </div>
+                <div class="photo-wrap">
+                    <div class="photo-box" id="photoBox">ไม่มีรูป</div>
+                </div>
+            </div>
+
+            <!-- SEC 1: ตำแหน่ง -->
+            <div class="sec">
+                <div class="row">
+                    <span class="lbl">ตำแหน่งที่สมัคร 1.</span> <span class="val wide" id="v_pos1"></span>
+                    <span class="lbl">2.</span> <span class="val wide" id="v_pos2"></span>
+                    <span class="lbl">เงินเดือนที่ต้องการ</span> <span class="val" id="v_salary"></span> <span
+                        class="lbl">(บาท)</span>
+                </div>
+            </div>
+
+            <!-- SEC 2: ประวัติส่วนตัว -->
+            <div class="sec">
+                <div class="sec-title">ประวัติส่วนตัว</div>
+                <div class="row">
+                    <span class="lbl">ชื่อ - นามสกุล</span> <span class="val xwide" id="v_name"></span>
+                    <span class="lbl">ชื่อเล่น</span> <span class="val" id="v_nick"></span>
+                    <span class="lbl">เบอร์โทรศัพท์</span> <span class="val" id="v_phone"></span>
+                </div>
+                <div class="row">
+                    <span class="lbl">วัน/เดือน/ปีเกิด</span> <span class="val wide" id="v_birth"></span>
+                    <span class="lbl">อายุ</span> <span class="val" id="v_age"></span> <span class="lbl">ปี</span>
+                    <span class="lbl">ส่วนสูง</span> <span class="val" id="v_height"></span> <span
+                        class="lbl">ซม.</span>
+                    <span class="lbl">น้ำหนัก</span> <span class="val" id="v_weight"></span> <span
+                        class="lbl">กก.</span>
+                    <span class="lbl">จ.เกิด</span> <span class="val" id="v_birthprov"></span>
+                </div>
+                <div class="sec-title" style="margin-top:6px">ประวัติการศึกษาสูงสุด</div>
+                <div class="row">
+                    <span class="lbl">ชื่อโรงเรียน/สถาบัน</span> <span class="val xwide" id="v_school"></span>
+                    <span class="lbl">วุฒิการศึกษา</span> <span class="val" id="v_edu"></span>
+                    <span class="lbl">สาขา</span> <span class="val wide" id="v_major"></span>
+                </div>
+                <div class="row" style="margin-top:4px">
+                    <span class="lbl">สถานภาพ</span>
+                    <div class="chk-row" style="display:inline-flex">
+                        <div class="chk-item">
+                            <div class="chk-box" id="chk_d1"></div> โสด
+                        </div>
+                        <div class="chk-item">
+                            <div class="chk-box" id="chk_d2"></div> สมรสจดทะเบียน
+                        </div>
+                        <div class="chk-item">
+                            <div class="chk-box" id="chk_d3"></div> สมรสไม่จดทะเบียน
+                        </div>
+                        <div class="chk-item">
+                            <div class="chk-box" id="chk_d4"></div> หม้าย
+                        </div>
+                        <div class="chk-item">
+                            <div class="chk-box" id="chk_d5"></div> หย่าร้าง
+                        </div>
+                    </div>
+                    <span class="lbl" style="margin-left:12px">จำนวนบุตร-ธิดา</span> <span class="val"
+                        id="v_children"></span> <span class="lbl">คน</span>
+                </div>
+                <div class="row">
+                    <span class="lbl">ท่านมีคู่สมรส/ญาติ/พี่น้อง ทำงานที่บริษัทฯ หรือไม่</span>
+                    <div class="chk-item">
+                        <div class="chk-box" id="chk_e1"></div> ไม่มี
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box" id="chk_e2"></div> มี
+                    </div>
+                    <span class="lbl">ชื่อ</span> <span class="val wide" id="v_acqname"></span>
+                    <span class="lbl">ความสัมพันธ์</span> <span class="val" id="v_acqrel"></span>
+                </div>
+                <div class="row">
+                    <span class="lbl">ผู้แนะนำชื่อ</span> <span class="val wide" id="v_refname"></span>
+                    <span class="lbl">ความสัมพันธ์</span> <span class="val" id="v_refrel"></span>
+                    <span class="lbl">Facebook</span> <span class="val wide" id="v_fb"></span>
+                    <span class="lbl">Line ID</span> <span class="val" id="v_line"></span>
+                </div>
+            </div>
+
+            <!-- SEC 3: ธุรกิจ -->
+            <div class="sec">
+                <div class="row">
+                    <span class="lbl">ปัจจุบันท่านดำเนินธุรกิจส่วนตัวหรือไม่</span>
+                    <div class="chk-item">
+                        <div class="chk-box" id="chk_f1"></div> ไม่มี
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box" id="chk_f2"></div> มี
+                    </div>
+                    <span class="lbl">โปรดระบุ</span> <span class="val wide" id="v_biz"></span>
+                </div>
+            </div>
+
+            <!-- SEC 4: ที่อยู่ -->
+            <div class="sec">
+                <div class="sec-title">ที่อยู่ปัจจุบัน</div>
+                <div class="row">
+                    <span class="lbl">บ้านเลขที่</span> <span class="val" id="v_cur_house"></span>
+                    <span class="lbl">หมู่บ้าน</span> <span class="val wide" id="v_cur_vil"></span>
+                    <span class="lbl">ถนน</span> <span class="val wide" id="v_cur_road"></span>
+                    <span class="lbl">ซอย</span> <span class="val" id="v_cur_soi"></span>
+                </div>
+                <div class="row">
+                    <span class="lbl">ตำบล</span> <span class="val wide" id="v_cur_sub"></span>
+                    <span class="lbl">อำเภอ</span> <span class="val wide" id="v_cur_dist"></span>
+                    <span class="lbl">จังหวัด</span> <span class="val wide" id="v_cur_prov"></span>
+                    <span class="lbl">รหัสไปรษณีย์</span> <span class="val" id="v_cur_zip"></span>
+                </div>
+                <div class="sec-title" style="margin-top:6px">ที่อยู่ตามทะเบียนบ้าน</div>
+                <div class="row">
+                    <span class="lbl">บ้านเลขที่</span> <span class="val" id="v_reg_house"></span>
+                    <span class="lbl">หมู่บ้าน</span> <span class="val wide" id="v_reg_vil"></span>
+                    <span class="lbl">ถนน</span> <span class="val wide" id="v_reg_road"></span>
+                    <span class="lbl">ซอย</span> <span class="val" id="v_reg_soi"></span>
+                </div>
+                <div class="row">
+                    <span class="lbl">ตำบล</span> <span class="val wide" id="v_reg_sub"></span>
+                    <span class="lbl">อำเภอ</span> <span class="val wide" id="v_reg_dist"></span>
+                    <span class="lbl">จังหวัด</span> <span class="val wide" id="v_reg_prov"></span>
+                    <span class="lbl">รหัสไปรษณีย์</span> <span class="val" id="v_reg_zip"></span>
+                </div>
+            </div>
+
+            <!-- SEC 5: ผู้ติดต่อ -->
+            <div class="sec">
+                <div class="sec-title">บุคคลติดต่อได้กรณีเร่งด่วน</div>
+                <div class="row">
+                    <span class="lbl">ชื่อ-นามสกุล</span> <span class="val xwide" id="v_emg_name"></span>
+                    <span class="lbl">ความสัมพันธ์</span> <span class="val" id="v_emg_rel"></span>
+                    <span class="lbl">เบอร์โทรศัพท์</span> <span class="val" id="v_emg_phone"></span>
+                </div>
+            </div>
+
+            <!-- PAGE BREAK: page 1 ends here -->
+            <div class="page-break"></div>
+
+            <!-- SEC 6: ทักษะ -->
+            <div class="sec">
+                <div class="sec-title">ภาษาต่างประเทศ / ทักษะคอมพิวเตอร์</div>
+                <table class="skill-table">
+                    <thead>
+                        <tr>
+                            <th class="skill-label">ทักษะ</th>
+                            <th colspan="3">ดีมาก</th>
+                            <th colspan="4">ปานกลาง</th>
+                            <th colspan="3">ไม่ดี</th>
+                        </tr>
+                        <tr>
+                            <th class="skill-label"></th>
+                            <th>10</th>
+                            <th>9</th>
+                            <th>8</th>
+                            <th>7</th>
+                            <th>6</th>
+                            <th>5</th>
+                            <th>4</th>
+                            <th>3</th>
+                            <th>2</th>
+                            <th>1</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="skill-label">พูดภาษาอังกฤษ</td>
+                            <td id="g10"></td>
+                            <td id="g9"></td>
+                            <td id="g8"></td>
+                            <td id="g7"></td>
+                            <td id="g6"></td>
+                            <td id="g5"></td>
+                            <td id="g4"></td>
+                            <td id="g3"></td>
+                            <td id="g2"></td>
+                            <td id="g1"></td>
+                        </tr>
+                        <tr>
+                            <td class="skill-label">เขียนภาษาอังกฤษ</td>
+                            <td id="h10"></td>
+                            <td id="h9"></td>
+                            <td id="h8"></td>
+                            <td id="h7"></td>
+                            <td id="h6"></td>
+                            <td id="h5"></td>
+                            <td id="h4"></td>
+                            <td id="h3"></td>
+                            <td id="h2"></td>
+                            <td id="h1"></td>
+                        </tr>
+                        <tr>
+                            <td class="skill-label">Microsoft Word</td>
+                            <td id="k10"></td>
+                            <td id="k9"></td>
+                            <td id="k8"></td>
+                            <td id="k7"></td>
+                            <td id="k6"></td>
+                            <td id="k5"></td>
+                            <td id="k4"></td>
+                            <td id="k3"></td>
+                            <td id="k2"></td>
+                            <td id="k1"></td>
+                        </tr>
+                        <tr>
+                            <td class="skill-label">Microsoft Excel</td>
+                            <td id="l10"></td>
+                            <td id="l9"></td>
+                            <td id="l8"></td>
+                            <td id="l7"></td>
+                            <td id="l6"></td>
+                            <td id="l5"></td>
+                            <td id="l4"></td>
+                            <td id="l3"></td>
+                            <td id="l2"></td>
+                            <td id="l1"></td>
+                        </tr>
+                        <tr>
+                            <td class="skill-label">Microsoft PowerPoint</td>
+                            <td id="m10"></td>
+                            <td id="m9"></td>
+                            <td id="m8"></td>
+                            <td id="m7"></td>
+                            <td id="m6"></td>
+                            <td id="m5"></td>
+                            <td id="m4"></td>
+                            <td id="m3"></td>
+                            <td id="m2"></td>
+                            <td id="m1"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- SEC 7: ขับขี่ -->
+            <div class="sec">
+                <div class="sec-title">ความสามารถในการขับขี่</div>
+                <div class="row" style="margin-bottom:6px">
+                    <div class="chk-item">
+                        <div class="chk-box" id="chk_q1"></div> ขับรถยนต์ ได้
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box" id="chk_q5"></div> ขับรถยนต์ ไม่ได้
+                    </div>
+                    &nbsp;&nbsp;
+                    <div class="chk-item">
+                        <div class="chk-box" id="chk_q3"></div> เกียร์ออโต้
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box" id="chk_q2"></div> เกียร์ธรรมดา
+                    </div>
+                    &nbsp;&nbsp;
+                    <div class="chk-item">
+                        <div class="chk-box" id="chk_r1"></div> มีใบขับขี่รถยนต์
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box" id="chk_r2"></div> ไม่มีใบขับขี่รถยนต์
+                    </div>
+                    &nbsp;&nbsp;
+                    <div class="chk-item">
+                        <div class="chk-box" id="chk_s1"></div> มีรถยนต์ส่วนตัว
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box" id="chk_s2"></div> ไม่มีรถยนต์ส่วนตัว
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="chk-item">
+                        <div class="chk-box" id="chk_q4"></div> ขับรถจักรยานยนต์ ได้
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box" id="chk_q6"></div> ขับรถจักรยานยนต์ ไม่ได้
+                    </div>
+                    &nbsp;&nbsp;
+                    <div class="chk-item">
+                        <div class="chk-box" id="chk_r3"></div> มีใบขับขี่จักรยานยนต์
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box" id="chk_r4"></div> ไม่มีใบขับขี่จักรยานยนต์
+                    </div>
+                    &nbsp;&nbsp;
+                    <div class="chk-item">
+                        <div class="chk-box" id="chk_s3"></div> มีรถจักรยานยนต์ส่วนตัว
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box" id="chk_s4"></div> ไม่มีรถจักรยานยนต์ส่วนตัว
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEC 8: สุขภาพ -->
+            <div class="sec">
+                <div class="sec-title">สุขภาพ</div>
+                <div class="row">
+                    <span class="lbl">สายตา</span>
+                    <div class="chk-item">
+                        <div class="chk-box" id="chk_t1"></div> ปกติ
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box" id="chk_t2"></div> ยาว
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box" id="chk_t3"></div> สั้น
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box" id="chk_t4"></div> ตาบอดสี
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box" id="chk_t5"></div> ตาเอียง
+                    </div>
+                </div>
+                <div class="row">
+                    <span class="lbl">ตั้งครรภ์</span>
+                    <div class="chk-item">
+                        <div class="chk-box" id="chk_u1"></div> ไม่ใช่
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box" id="chk_u2"></div> ใช่
+                    </div>
+                    <span class="lbl">อายุครรภ์</span> <span class="val" id="v_preg_wk"></span> <span
+                        class="lbl">สัปดาห์</span>
+                </div>
+                <div class="row">
+                    <span class="lbl">โรคประจำตัว</span>
+                    <div class="chk-item">
+                        <div class="chk-box" id="chk_v1"></div> ไม่มี
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box" id="chk_v2"></div> มี
+                    </div>
+                    <span class="lbl">โรค</span> <span class="val wide" id="v_disease"></span>
+                </div>
+                <div class="row">
+                    <span class="lbl">คดีความ</span>
+                    <div class="chk-item">
+                        <div class="chk-box" id="chk_w1"></div> ไม่เคย
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box" id="chk_w2"></div> เคย
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box" id="chk_w3"></div> ยังดำเนินคดีอยู่
+                    </div>
+                    <span class="lbl">ประเภทคดี</span> <span class="val wide" id="v_legal_type"></span>
+                </div>
+                <div class="row">
+                    <span class="lbl">ยาเสพติด</span>
+                    <div class="chk-item">
+                        <div class="chk-box" id="chk_x1"></div> ไม่เคย
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box" id="chk_x2"></div> เคย
+                    </div>
+                    <div class="chk-item">
+                        <div class="chk-box" id="chk_x3"></div> บำบัดอยู่
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE BREAK: page 2 ends here -->
+            <div class="page-break"></div>
+
+            <!-- SEC 9: ประวัติการทำงาน -->
+            <div class="sec" style="border-top:1px solid #ccc;">
+                <div class="sec-title">ประวัติการทำงาน &nbsp;<small style="font-weight:400;color:#666">(เรียงจากล่าสุด →
+                        อดีต)</small></div>
+            </div>
+            <div id="workContainer"></div>
+
+            <!-- FOOTER -->
+            <div class="doc-footer no-break">
+                <div class="footer-terms">
+                    <p>1. ข้าพเจ้ายินยอมเปิดเผยข้อมูลส่วนบุคคล และยินยอมให้บริษัทฯ
+                        ตรวจสอบประวัติการทำงานจากบริษัทฯเดิมและจากหน่วยงานราชการได้</p>
+                    <p>2. ข้าพเจ้าขอรับรองว่าข้อมูลที่กรอกในใบสมัครเป็นข้อมูลจริงทุกประการ
+                        หากปรากฎในภายหลังว่าข้าพเจ้าปิดบังความเป็นจริงหรือให้ข้อมูลอันเป็นเท็จ ข้าพเจ้ายินยอมให้บริษัทฯ
+                        ยกเลิกการสมัครงานหรือพ้นสภาพจากการเป็นพนักงานทันที</p>
+                    <p>3. กรณีตรวจสอบพบว่าข้าพเจ้ามีคดีทุจริต ข้าพเจ้ายินยอมให้บริษัทฯ
+                        ยกเลิกการสมัครงานหรือพ้นสภาพจากการเป็นพนักงานทันที</p>
+                    <p>4. บริษัทฯ ขอสงวนสิทธิ์ในการพิจารณาการรับเข้าทำงาน
+                        กรณีผู้สมัครมีคดีที่ยังดำเนินการอยู่หรือมีคดีรุนแรง</p>
+                </div>
+                <div class="sig-row">
+                    <div class="sig-box">
+                        <div class="sig-line"></div>
+                        <div>ผู้สมัครลงชื่อ</div>
+                        <div id="v_sig_name" style="margin-top:2px"></div>
+                        <div>วันที่ <span id="v_sig_date"></span></div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /doc -->
+    </div><!-- /page -->
+
+    <script>
+        const API = '/SomjaiJobDB/backend';
+        const token = localStorage.getItem('token');
+        if (!token) { window.location.href = 'login.html'; }
+
+        const id = new URLSearchParams(location.search).get('id');
+        if (!id) {
+            document.getElementById('loadingEl').innerHTML = '<p style="color:red;padding:40px">❌ ไม่พบ ID ใบสมัคร กรุณาเปิดจากรายการใบสมัคร</p>';
+        }
+
+        // ── helpers ──────────────────────────────────────────────────
+        const $ = id => document.getElementById(id);
+        const v = (id, val) => { const el = $(id); if (el) el.textContent = val || '—'; };
+        const chk = (id, active) => { const el = $(id); if (el && active) el.classList.add('checked'); };
+
+        function skillDot(prefix, val) {
+            for (let i = 1; i <= 10; i++) {
+                const el = $(`${prefix}${i}`);
+                if (!el) continue;
+                if (parseInt(val) === i) { el.textContent = '●'; el.classList.add('active'); }
+                else el.textContent = '';
+            }
+        }
+
+        function thDate(dateStr) {
+            if (!dateStr) return '—';
+            const d = new Date(dateStr);
+            if (isNaN(d)) return dateStr;
+            return d.toLocaleDateString('th-TH', { day: '2-digit', month: 'long', year: 'numeric' });
+        }
+
+        // ── load ──────────────────────────────────────────────────────
+        async function load() {
+            try {
+                console.log('Fetching:', `${API}/get_application_detail.php?id=${id}`);
+                const res = await fetch(`${API}/get_application_detail.php?id=${id}`, {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+                console.log('Response status:', res.status);
+                const json = await res.json();
+                if (!json.success) {
+                    if (res.status === 401) { location.href = 'login.html'; return; }
+                    $('loadingEl').innerHTML = `<p style="color:red;padding:40px">⚠️ ${json.error}</p>`;
+                    return;
+                }
+
+                const d = json.data;
+                const w = json.work_histories || [];
+
+                $('loadingEl').style.display = 'none';
+                $('docEl').style.display = 'block';
+
+                // Submitted date
+                $('submittedAt').textContent = 'วันที่สมัคร: ' + thDate(d.submitted_at);
+
+                // Photo
+                if (d.profile_image_path) {
+                    document.getElementById('photoBox').innerHTML = `<img src="${API}/${d.profile_image_path}" alt="รูปผู้สมัคร" onerror="this.parentNode.textContent='ไม่มีรูป'"/>`;
+                }
+
+                // Sec 1
+                v('v_pos1', d.position1); v('v_pos2', d.position2);
+                v('v_salary', d.expected_salary ? Number(d.expected_salary).toLocaleString('th-TH') : '—');
+
+                // Sec 2
+                v('v_name', d.full_name); v('v_nick', d.nickname); v('v_phone', d.phone);
+                v('v_birth', thDate(d.birth_date)); v('v_age', d.age); v('v_height', d.height_cm); v('v_weight', d.weight_kg);
+                v('v_birthprov', d.birth_province);
+                v('v_school', d.school_name); v('v_edu', d.education_level); v('v_major', d.major);
+
+                // Marital
+                const ms = d.marital_status || '';
+                chk('chk_d1', ms === 'โสด'); chk('chk_d2', ms === 'สมรสจดทะเบียน');
+                chk('chk_d3', ms === 'สมรสไม่จดทะเบียน'); chk('chk_d4', ms === 'หม้าย'); chk('chk_d5', ms === 'หย่าร้าง');
+                v('v_children', d.children_count != null ? d.children_count : 0);
+
+                // Acquaintance
+                const hasAcq = d.has_acquaintance === true || d.has_acquaintance === 'true';
+                chk('chk_e1', !hasAcq); chk('chk_e2', hasAcq);
+                v('v_acqname', d.acquaintance_name); v('v_acqrel', d.acquaintance_relation);
+
+                // Referrer
+                v('v_refname', d.referrer_name); v('v_refrel', d.referrer_relation);
+                v('v_fb', d.facebook); v('v_line', d.line_id);
+
+                // Business
+                const hasBiz = d.has_own_business === true || d.has_own_business === 'true';
+                chk('chk_f1', !hasBiz); chk('chk_f2', hasBiz);
+                v('v_biz', d.business_type);
+
+                // Address cur
+                v('v_cur_house', d.cur_house_no); v('v_cur_vil', d.cur_village);
+                v('v_cur_road', d.cur_road); v('v_cur_soi', d.cur_soi);
+                v('v_cur_sub', d.cur_subdistrict_name); v('v_cur_dist', d.cur_district_name);
+                v('v_cur_prov', d.cur_province_name); v('v_cur_zip', d.cur_postal);
+
+                // Address reg
+                v('v_reg_house', d.reg_house_no); v('v_reg_vil', d.reg_village);
+                v('v_reg_road', d.reg_road); v('v_reg_soi', d.reg_soi);
+                v('v_reg_sub', d.reg_subdistrict_name); v('v_reg_dist', d.reg_district_name);
+                v('v_reg_prov', d.reg_province_name); v('v_reg_zip', d.reg_postal);
+
+                // Emergency
+                v('v_emg_name', d.emergency_name); v('v_emg_rel', d.emergency_relation); v('v_emg_phone', d.emergency_phone);
+
+                // Skills
+                skillDot('g', d.eng_speaking); skillDot('h', d.eng_writing);
+                skillDot('k', d.ms_word); skillDot('l', d.ms_excel); skillDot('m', d.ms_ppt);
+
+                // Driving
+                const car = d.can_drive_car === 'ได้';
+                const moto = d.can_drive_moto === 'ได้';
+                chk('chk_q1', car); chk('chk_q5', !car);
+                chk('chk_q4', moto); chk('chk_q6', !moto);
+                chk('chk_q2', (d.car_gear || '').includes('ธรรมดา'));
+                chk('chk_q3', (d.car_gear || '').includes('ออโต้'));
+                const cl = d.has_car_license === true || d.has_car_license === 'true';
+                const oc = d.has_own_car === true || d.has_own_car === 'true';
+                const ml = d.has_moto_license === true || d.has_moto_license === 'true';
+                const om = d.has_own_moto === true || d.has_own_moto === 'true';
+                chk('chk_r1', cl); chk('chk_r2', !cl);
+                chk('chk_s1', oc); chk('chk_s2', !oc);
+                chk('chk_r3', ml); chk('chk_r4', !ml);
+                chk('chk_s3', om); chk('chk_s4', !om);
+
+                // Health
+                const vis = d.vision || '';
+                chk('chk_t1', vis === 'ปกติ'); chk('chk_t2', vis === 'ยาว'); chk('chk_t3', vis === 'สั้น');
+                chk('chk_t4', vis === 'ตาบอดสี'); chk('chk_t5', vis === 'ตาเอียง');
+                const preg = d.is_pregnant === true || d.is_pregnant === 'true';
+                chk('chk_u1', !preg); chk('chk_u2', preg);
+                v('v_preg_wk', preg ? d.pregnancy_weeks : '');
+                const dis = d.has_chronic_disease === true || d.has_chronic_disease === 'true';
+                chk('chk_v1', !dis); chk('chk_v2', dis);
+                v('v_disease', dis ? d.chronic_disease : '');
+                const leg = d.legal_status || 'ไม่เคย';
+                chk('chk_w1', leg === 'ไม่เคย'); chk('chk_w2', leg === 'เคย'); chk('chk_w3', leg === 'ยังดำเนินคดีอยู่');
+                v('v_legal_type', d.legal_case_type);
+                const drug = d.drug_status || 'ไม่เคย';
+                chk('chk_x1', drug === 'ไม่เคย'); chk('chk_x2', drug === 'เคย'); chk('chk_x3', drug === 'บำบัดอยู่');
+
+                // Work histories
+                const wc = $('workContainer');
+                // Always render 5 slots
+                const workMap = {};
+                w.forEach(j => { workMap[j.seq] = j; });
+
+                let workHtml = '';
+                for (let seq = 1; seq <= 5; seq++) {
+                    const j = workMap[seq] || {};
+                    workHtml += `
+        <div class="work-block no-break">
+          <div class="work-num">ประวัติการทำงานที่ ${seq}</div>
+          <div class="row">
+            <span class="lbl">ชื่อบริษัท</span> <span class="val xwide">${j.company_name || ''}</span>
+            <span class="lbl">อำเภอ/เขต</span> <span class="val">${j.district || ''}</span>
+            <span class="lbl">จังหวัด</span> <span class="val">${j.province || ''}</span>
+          </div>
+          <div class="row">
+            <span class="lbl">ตำแหน่ง</span> <span class="val wide">${j.position || ''}</span>
+            <span class="lbl">เริ่มงาน</span> <span class="val wide">${j.start_date ? thDate(j.start_date) : ''}</span>
+            <span class="lbl">ลาออก</span> <span class="val wide">${j.end_date ? thDate(j.end_date) : ''}</span>
+          </div>
+          <div class="row">
+            <span class="lbl">ลักษณะงาน 1</span> <span class="val xwide">${j.duty1 || ''}</span>
+            <span class="lbl">2</span> <span class="val xwide">${j.duty2 || ''}</span>
+          </div>
+          <div class="row">
+            <span class="lbl">ประเภทธุรกิจ</span> <span class="val wide">${j.biz_type || ''}</span>
+            <span class="lbl">สาเหตุที่ลาออก</span> <span class="val xwide">${j.resign_reason || ''}</span>
+          </div>
+        </div>`;
+                }
+                wc.innerHTML = workHtml;
+
+                // Signature
+                v('v_sig_name', `(${d.full_name || ''})`);
+                v('v_sig_date', thDate(d.submitted_at));
+
+            } catch (e) {
+                $('loadingEl').innerHTML = `<p style="color:red;padding:40px">⚠️ โหลดข้อมูลไม่สำเร็จ</p>`;
+                console.error(e);
+            }
+        }
+
+        if (id) load();
+
+        function doPrint() {
+            // Show instruction modal
+            const modal = document.getElementById('printModal');
+            if (modal) modal.style.display = 'flex';
+        }
+
+        function closePrintModal() {
+            document.getElementById('printModal').style.display = 'none';
+        }
+
+        function confirmPrint() {
+            document.getElementById('printModal').style.display = 'none';
+            window.print();
+        }
+    </script>
+
+    <!-- PRINT INSTRUCTION MODAL -->
+    <div id="printModal"
+        style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;align-items:center;justify-content:center;">
+        <div
+            style="background:#fff;border-radius:12px;padding:28px 32px;max-width:420px;width:90%;box-shadow:0 16px 48px rgba(0,0,0,0.2);">
+            <h3 style="font-size:1rem;font-weight:800;margin-bottom:12px;color:#1a0000;">🖨 ก่อนพิมพ์ — กรุณาตั้งค่า
+            </h3>
+            <p style="font-size:.85rem;color:#555;margin-bottom:16px;line-height:1.7;">เพื่อซ่อนวันที่และ URL
+                ที่ขอบกระดาษ ให้ปิดตัวเลือกนี้ในหน้าต่างพิมพ์:</p>
+            <div
+                style="background:#fff8f0;border:1px solid #f0cccc;border-radius:8px;padding:12px 16px;margin-bottom:20px;font-size:.83rem;line-height:1.9;">
+                <b>Chrome / Edge:</b><br />
+                More settings → ปิด <b>"Headers and footers"</b>
+                <hr style="border:none;border-top:1px solid #f0cccc;margin:8px 0;" />
+                <b>Firefox:</b><br />
+                ไปที่ Options → ลบค่าใน <b>"Headers"</b> และ <b>"Footers"</b>
+            </div>
+            <div style="display:flex;gap:10px;justify-content:flex-end;">
+                <button onclick="closePrintModal()"
+                    style="padding:8px 18px;border-radius:6px;border:1.5px solid #ccc;background:#fff;font-family:'Sarabun',sans-serif;font-size:.88rem;cursor:pointer;">ยกเลิก</button>
+                <button onclick="confirmPrint()"
+                    style="padding:8px 18px;border-radius:6px;border:none;background:#cc0000;color:#fff;font-family:'Sarabun',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;">พิมพ์เลย</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

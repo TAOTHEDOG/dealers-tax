@@ -1,0 +1,187 @@
+select 	h.customercode,c.taxid,h.contractno,(c.prefix ||' '||c.arname||' '||c.lname) as arname,
+(case when c.phoneno is not null then c.phoneno else c.mobileno end) as arphoneno,
+(c.homeno||' บ้าน'||c.addressname||' หมู่'||c.moo||' ซอย'||c.soi||' ถนน'||c.tanann||' ต.'||c.tambol||' อ.'||amphon||' จ.'||province||' '||postcode) as address,
+
+(select gprefix||' '||gname||' '||glname from tblrequestgurantee where requestno = h.contractno and seqno = 1) as gname,
+(select gphoneno from tblrequestgurantee where requestno = h.contractno and seqno = 1) as gphoneno,
+(select emprefix||' '||emfname||' '||emlname from tblrequestforms where orderno = h.contractno) as enmane2,
+(select emphoneno from tblrequestforms where orderno = h.contractno) as emphoneno2,
+c.emname,c.emaddressi
+
+
+from tblhpcontract h full join tblcustomer c on h.customercode = c.customercode
+where (case when c.phoneno is not null then c.phoneno else c.mobileno end) = '$p_usernamefrom'
+or (select gphoneno from tblrequestgurantee where requestno = h.contractno and seqno = 1) = '$p_usernamefrom'
+or (select emphoneno from tblrequestforms where orderno = h.contractno) = '$p_usernamefrom'
+or c.emaddressi = '$p_usernamefrom'
+
+//----------------------------------------------------------------------------------------------------------------------------//
+
+
+select a.contractno,contractdate,b.mobileno,a.chassisno,b.brithdate,a.hpprice,a.hpdown,
+b.arname||' '||b.lname as arname,a.chker,b.customercode,
+c.salecode,d.statususe,d.brandname,d.model,d.submodel, d.colorcode,a.closedtype,
+d.flaguse,a.grouplevel , chker, a.branchno,a.collection,a.firstpaid,a.amtperperiod,a.hp_paidintamount,a.hp_intbalamount,
+hp_overdueamt,hp_dueamount,a.hp_lastpaiddate,a.hp_intamount,hp_dueperiod,hp_paidperiod,a.hp_minperiod, a.hp_maxperiod, 
+hpprice, hpdown, hploannet, totalperiod, hp_overdueperiod ,a.hp_paidamount,dn_paidamount,a.recallstatus,c.promote,
+(select jobdescription from hlp_arcode where arcode = a.customercode limit 1) as jobar , 
+(a.hploannet+a.hpdown - a.hp_paidamount -a.dn_paidamount) as balanceamt ,b.taxid,
+(select addressi||' '||addressii||' '||addressiii from hlp_arcode where arcode = a.customercode limit 1) as addressi , 
+(select max(receivedate) from tblmstincome where contractno = a.contractno ) as lastreceive ,
+--(select max(receivedate) from tblmstincome where contractno = a.contractno and receivetype = 'HP') as lastreceive ,
+(select cmpname from tblcmpcode where cmpcode = a.branchno) as branchname,a.statushp,
+(select submodel from tblstockitem where chassisno = a.chassisno limit 1) as submodel,
+(select meaning from tblsubmodel where submodel = d.submodel limit 1) as meaning,
+(select enginno from tblstockitem where chassisno = a.chassisno limit 1) as enginno,
+(select regisno from tblstockitem where chassisno = a.chassisno limit 1) as regisno,
+(select max(statedate) from tblstatuscontract where contractno = a.contractno ) as statedate,
+(select claimstatus from tblpolicyno3 where chassisno = a.chassisno limit 1) as claimstatus,
+(select financecode from tblrequestforms where saleno=a.saleno limit 1)as financecode,
+c.salecodeclose,
+(select salename from hlp_salecode where salecode = c.salecodeclose) as salenameclose,
+(select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 1) as gidcard,
+(select addressi||' '||addressii||' '||addressiii from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 1)) as gaddressi,
+(select mobileno from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 1)) as gmobileno,
+(select taxid from tblcustomer where customercode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 1)) as gtaxid,
+(select prefix||''||arname||' '||lname from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 1)) as gname,
+(select jobdescription from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 1)) as jobg1,
+(select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 2) as gidcard2,
+(select taxid from tblcustomer where customercode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 2)) as gtaxid2,
+(select prefix||''||arname||' '||lname from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 2)) as gname2,
+(select mobileno from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 2)) as gmobileno2,
+
+(select addressi||' '||addressii||' '||addressiii from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 2)) as gaddressi2,
+(select jobdescription from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 2)) as jobg2,
+
+(select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 5) as gidcard55,
+(select mobileno from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 5)) as gmobileno55,
+(select prefix||''||arname||' '||lname from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 5)) as gname55,
+(select taxid from tblcustomer where customercode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 5)) as gtaxid55,
+
+(select addressi||' '||addressii||' '||addressiii from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 2)) as gaddressi2,
+(select jobdescription from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 5)) as jobg5,
+
+a.hprate,a.hpincome,a.hp_intbalamount,
+(select min(duedate) from tblhpperiod where saleno = a.saleno limit 1) as mindue,
+(select max(duedate) from tblhpperiod where saleno = a.saleno limit 1) as maxdue,
+a.hp_disconnect,
+(select follower from tblfollowup where contractno = a.contractno and entrydate = (select max(entrydate) from tblfollowup where contractno = a.contractno limit 1) limit 1)as follower,
+(select meaning from tblgroupjob where groupjob = b.groupjob) as groupjobmeaning,
+
+(select homeno from hlp_arcode where arcode = a.customercode limit 1) as arhomeno,
+(select moo from hlp_arcode where arcode = a.customercode limit 1) as armoo,
+(select addressname from hlp_arcode where arcode = a.customercode limit 1) as araddressname,
+(select soi from hlp_arcode where arcode = a.customercode limit 1) as arsoi,
+(select tanan from hlp_arcode where arcode = a.customercode limit 1) as artanan,
+(select tambol from hlp_arcode where arcode = a.customercode limit 1) as artambol,
+(select amphon from hlp_arcode where arcode = a.customercode limit 1) as aramphon,
+(select province from hlp_arcode where arcode = a.customercode limit 1) as arprovince,
+(select zipcode from hlp_arcode where arcode = a.customercode limit 1) as arzipcode,
+
+
+(select homeno from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 1)) as g1_homeno,
+(select moo from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 1)) as g1_moo,
+(select addressname from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 1)) as g1_addressname,
+(select soi from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 1)) as g1_soi,
+(select tanan from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 1)) as g1_tanan,
+(select tambol from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 1)) as g1_tambol,
+(select amphon from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 1)) as g1_amphon,
+(select province from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 1)) as g1_province,
+(select zipcode from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 1)) as g1_zipcode,
+(select relationship from tblrequestgurantee where requestno = a.contractno and seqno = 1) as g1_relationship,
+(select meaning from tblgroupjob where groupjob = (select groupjob from tblcustomer where customercode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 1))) as g1_groupjobmeaning,
+
+
+(select homeno from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 2)) as g2_homeno,
+(select moo from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 2)) as g2_moo,
+(select addressname from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 2)) as g2_addressname,
+(select soi from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 2)) as g2_soi,
+(select tanan from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 2)) as g2_tanan,
+(select tambol from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 2)) as g2_tambol,
+(select amphon from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 2)) as g2_amphon,
+(select province from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 2)) as g2_province,
+(select zipcode from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 2)) as g2_zipcode,
+(select relationship from tblrequestgurantee where requestno = a.contractno and seqno = 2) as g2_relationship,
+(select meaning from tblgroupjob where groupjob = (select groupjob from tblcustomer where customercode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 2))) as g2_groupjobmeaning,
+
+
+(select homeno from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 5)) as g55_homeno,
+(select moo from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 5)) as g55_moo,
+(select addressname from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 5)) as g55_addressname,
+(select soi from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 5)) as g55_soi,
+(select tanan from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 5)) as g55_tanan,
+(select tambol from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 5)) as g55_tambol,
+(select amphon from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 5)) as g55_amphon,
+(select province from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 5)) as g55_province,
+(select zipcode from hlp_arcode where arcode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 5)) as g55_zipcode,
+(select relationship from tblrequestgurantee where requestno = a.contractno and seqno = 5) as g55_relationship,
+(select meaning from tblgroupjob where groupjob = (select groupjob from tblcustomer where customercode = (select gidcard from tblrequestgurantee where requestno = a.contractno and seqno = 5))) as g55_groupjobmeaning,
+
+
+(select arcode from hlp_arcode where arcode = (select emcode from tblrequestforms where requestno = c.requestno and requesttype = 'RQ' limit 1)) as g5_arcode,
+(select taxid from hlp_arcode where arcode = (select emcode from tblrequestforms where requestno = c.requestno and requesttype = 'RQ' limit 1)) as g5_taxid,
+(select mobileno from hlp_arcode where arcode = (select emcode from tblrequestforms where requestno = c.requestno and requesttype = 'RQ' limit 1)) as g5_mobileno,
+(select fullname from hlp_arcode where arcode = (select emcode from tblrequestforms where requestno = c.requestno and requesttype = 'RQ' limit 1)) as g5_arname,
+(select homeno from hlp_arcode where arcode = (select emcode from tblrequestforms where requestno = c.requestno and requesttype = 'RQ' limit 1)) as g5_homeno,
+(select moo from hlp_arcode where arcode = (select emcode from tblrequestforms where requestno = c.requestno and requesttype = 'RQ' limit 1)) as g5_moo,
+(select addressname from hlp_arcode where arcode = (select emcode from tblrequestforms where requestno = c.requestno and requesttype = 'RQ' limit 1)) as g5_addressname,
+(select soi from hlp_arcode where arcode = (select emcode from tblrequestforms where requestno = c.requestno and requesttype = 'RQ' limit 1)) as g5_soi,
+(select tanan from hlp_arcode where arcode = (select emcode from tblrequestforms where requestno = c.requestno and requesttype = 'RQ' limit 1)) as g5_tanan,
+(select tambol from hlp_arcode where arcode = (select emcode from tblrequestforms where requestno = c.requestno and requesttype = 'RQ' limit 1)) as g5_tambol,
+(select amphon from hlp_arcode where arcode = (select emcode from tblrequestforms where requestno = c.requestno and requesttype = 'RQ' limit 1)) as g5_amphon,
+(select province from hlp_arcode where arcode = (select emcode from tblrequestforms where requestno = c.requestno and requesttype = 'RQ' limit 1)) as g5_province,
+(select zipcode from hlp_arcode where arcode = (select emcode from tblrequestforms where requestno = c.requestno and requesttype = 'RQ' limit 1)) as g5_zipcode,
+(select relation from tblrequestforms where requestno = c.requestno and requesttype = 'RQ' limit 1) as g5_relation,
+a.hp_paidperiod,
+
+b.emname,b.emaddressi,
+
+(select remark from tblrequestforms where requestno = c.requestno limit 1) as remark,
+(select promotecreditcode from tblrequestforms where requestno = c.requestno limit 1) as promotecreditcode,
+
+(select branchno_appiontment from tblrequestforms where orderno = c.requestno) as branchno_appiontment,
+(select cmpname from tblcmpcode where cmpcode = (select branchno_appiontment from tblrequestforms where orderno = c.requestno)) as branchnname_appiontment,
+(select grouplevel||' - '||meaning from tblgrouplevel where grouplevel = a.grouplevel) as grouplevelwithmeaning,
+sp_balanceamt(a.contractno,'$p_dateto') as balanceloannet,a.hpvatrate,a.hpincome,
+(select sum(eraningcashamt) from tblhppaidlate where contractno = a.contractno and functioncode = '402' and eraningcashamt > 0 and paiddate<='$p_dateto') as paidint,
+(select approvalby from tblrequestforms where orderno = c.requestno limit 1) as approvalby,
+(select checkername from tblchecker  where checkercode = (select approvalby from tblrequestforms where orderno = c.requestno limit 1)) as checkername,
+(select approvalby2 from tblrequestforms where orderno = c.requestno limit 1) as approvalby2,
+(select checkername from tblchecker  where checkercode = (select approvalby2 from tblrequestforms where orderno = c.requestno limit 1)) as checkername2,
+(select checkername from tblchecker  where checkercode = a.chker) as chkername,
+(select saleact||'-'||meaning from tblsaleact where saleact = (select saleact from tblrequestforms where requestno = c.requestno limit 1) limit 1) as saleactmeaning,
+(select policyno from tblpolicyno3 where chassisno = a.chassisno order by requestdate desc limit 1) as policy1,
+(select assureno from tblpolicyno3 where chassisno = a.chassisno order by requestdate desc limit 1) as assureno1,
+(select policyenforce from tblpolicyno3 where chassisno = a.chassisno order by requestdate desc limit 1)as policyenforce1,
+(select policyexpari from tblpolicyno3 where chassisno = a.chassisno limit 1)as policyexpari1,
+(select checkercode from temp_areachecker where branchno = a.branchno and a.contractdate >= fristdate and a.contractdate <= lastdate and checkercode is not null) as areacheckercode,
+(select checkername from tblchecker  where checkercode = (select checkercode from temp_areachecker where branchno = a.branchno and a.contractdate >= fristdate and a.contractdate <= lastdate and checkercode is not null)) as areacheckername,
+
+(a.hploannet+a.hpdown)-(a.hp_paidamount+a.dn_paidamount) as hpbalance,
+
+(select sum(followamount) FROM tblfollowup where contractno = a.contractno) as amount,
+(SELECT sum(dt.amount) FROM tblmstincome ms, tbldtlincome dt where ms.receiveno = dt.receiveno AND dt.receivetype = 'IN' 
+			and dt.functioncode = '408' and ms.contractno  = a.contractno) as netpaid
+
+
+
+
+
+
+
+from tblhpcontract a 
+left join tblcustomer b on b.customercode = a.customercode 
+left join tblmststock c on c.stockno = a.saleno and c.stocktype =a.saletype
+left join tbldtlstock d on d.stockno = c.stockno and c.stocktype = d.stocktype and d.seqno = 1
+
+where a.saletype='HP'
+
+and (a.hploannet+a.hpdown - a.hp_paidamount -a.dn_paidamount) > 0 and a.closed = 'N' and a.cancel <> 'Y'
+and a.contractdate >= '" . $p_date . "' and a.contractdate <= '" . $p_dateto . "'
+and hp_overdueperiod " . $p_conditionfrom . " " . $p_period . "
+and hp_overdueperiod " . $p_periodto . " " . $p_perioddue . " 
+
+and (a.hploannet+a.hpdown - a.hp_paidamount -a.dn_paidamount) >=" . $p_Beginamount . " 
+and (a.hploannet+a.hpdown - a.hp_paidamount -a.dn_paidamount) <=" . $p_Beginamountto . " 
+and a.branchno >= '$p_branchno' and a.branchno <= '$p_branchnoto' " . $l_where . " " . $l_addition . " 
+order by a.branchno,contractno, contractdate

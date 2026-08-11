@@ -1,0 +1,23 @@
+// ค้นหาสาขาของดีลเลอร์  //drpodown branch
+// รหัสสาขา และชื่อสาขา
+select cmpcode,cmpname from tblcmpcode where branchgroup = '{$branchno}'
+
+
+//ค้นหาใบกำกับภาษีและเลขถัง
+select d.chassisno,d.stockno,m.stockdate,
+(select b.apbillno from tbldtlbilling a,tblmstbilling b where a.apbillno = b.apbillno and a.stockno = d.stockno) as apbillno,
+(select b.sdtduedate from tbldtlbilling a,tblmstbilling b where a.apbillno = b.apbillno and a.stockno = d.stockno) as sdtduedate
+from tblmststock m,tbldtlstock d
+where m.stockno = d.stockno 
+and m.stocktype = 'IC' 
+and m.branchno = '441' --สาขาที่ส่ง
+and m.customercode = 'AP-1488' --รหัสเจ้าหนี้
+and m.stockdate >= '25660925' --วันที่เอกสาร
+and chassisno like'%367143' --เลขถัง
+
+
+tblmststock
+tbldtlstock
+tbldtlbilling
+tblmstbilling
+tblcmpcode

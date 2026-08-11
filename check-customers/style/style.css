@@ -1,0 +1,64 @@
+body {
+    margin: 0;
+    padding: 0;
+    /* height: 100vh;
+    width: 100vw; */
+}
+
+#form-login {
+    width: 350px;
+}
+
+.div-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+.divindex-center {
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    /* height: 100vh;
+    width: 100vw; */
+}
+
+.form-check {
+    padding: 30px;
+}
+
+.table2 {
+    /* padding: 30px; */
+    width: 90vw;
+    min-width: 250px;
+    overflow-x: auto;
+    /* position: absolute;
+    top: 700px; */
+    /* left: 30px; */
+}
+
+@media screen and (max-width: 676px) {
+    .table2 {
+        position: absolute;
+        top: 1200px;
+        left: 20px;
+    }
+
+}
+
+span {
+    color: red;
+}
+
+hr {
+    width: 100%;
+    text-align: left;
+    margin-left: 0"
+}
+
+thead {
+    position: sticky;
+    top: 0;
+}

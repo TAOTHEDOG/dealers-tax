@@ -1,0 +1,1167 @@
+{
+    "type": "FeatureCollection",
+    "name": "รายชื่อจังหวัดทั่วประเทศ",
+    "crs": {
+        "type": "name",
+        "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+        }
+    },
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "56",
+                "pro_n_t": "พะเยา",
+                "pro_n_e": "PHAYAO"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    100.187501046214237,
+                    19.23381338833563
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "54",
+                "pro_n_t": "แพร่",
+                "pro_n_e": "PHRAE"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    100.066262483328742,
+                    18.201251053101778
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "37",
+                "pro_n_t": "อำนาจเจริญ",
+                "pro_n_e": "AMNAT CHAROEN"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    104.739592146408313,
+                    15.892127658710843
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "36",
+                "pro_n_t": "ชัยภูมิ",
+                "pro_n_e": "CHAIYAPHUM"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    101.818091368588711,
+                    16.032240653227344
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "60",
+                "pro_n_t": "นครสวรรค์",
+                "pro_n_e": "NAKHON SAWAN"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    100.152563159314511,
+                    15.683755318947725
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "61",
+                "pro_n_t": "อุทัยธานี",
+                "pro_n_e": "UTHAI THANI"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    99.478404855342902,
+                    15.350143475515429
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "62",
+                "pro_n_t": "กำแพงเพชร",
+                "pro_n_e": "KAMPHAENG PHET"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    99.532480557083915,
+                    16.331392583226307
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "63",
+                "pro_n_t": "ตาก",
+                "pro_n_e": "TAK"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    98.791402478489786,
+                    16.714124267552531
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "64",
+                "pro_n_t": "สุโขทัย",
+                "pro_n_e": "SUKHOTHAI"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    99.709791348073949,
+                    17.260391892852471
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "65",
+                "pro_n_t": "พิษณุโลก",
+                "pro_n_e": "PHITSANULOK"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    100.542279871789091,
+                    16.983379498848148
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "66",
+                "pro_n_t": "พิจิตร",
+                "pro_n_e": "PHICHIT"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    100.343662798807699,
+                    16.259198406131883
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "67",
+                "pro_n_t": "เพชรบูรณ์",
+                "pro_n_e": "PHETCHABUN"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    101.145274885705931,
+                    16.263833207353631
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "82",
+                "pro_n_t": "พังงา",
+                "pro_n_e": "PHANGNGA"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    98.420459938427982,
+                    8.673393708384946
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "83",
+                "pro_n_t": "ภูเก็ต",
+                "pro_n_e": "PHUKET"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    98.343213625251877,
+                    7.960503061237262
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "80",
+                "pro_n_t": "นครศรีธรรมราช",
+                "pro_n_e": "NAKHON SI THAMMARAT"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    99.786212668049615,
+                    8.38121295742863
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "81",
+                "pro_n_t": "กระบี่",
+                "pro_n_e": "KRABI"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    99.020290135129144,
+                    8.145268286913375
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "86",
+                "pro_n_t": "ชุมพร",
+                "pro_n_e": "CHUMPHON"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    99.062073471162805,
+                    10.345856592007117
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "84",
+                "pro_n_t": "สุราษฎ์ธานี",
+                "pro_n_e": "SURAT THANI"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    99.089672392688939,
+                    9.052249163006012
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "85",
+                "pro_n_t": "ระนอง",
+                "pro_n_e": "RANONG"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    98.700560157982679,
+                    9.969901622574126
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "24",
+                "pro_n_t": "ฉะเชิงเทรา",
+                "pro_n_e": "CHACHOENGSAO"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    101.428103185382938,
+                    13.607065593964919
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "25",
+                "pro_n_t": "ปราจีนบุรี",
+                "pro_n_e": "PRACHIN BURI"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    101.647874714515339,
+                    14.051508666965949
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "26",
+                "pro_n_t": "นครนายก",
+                "pro_n_e": "NAKHON NAYOK"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    101.170689127152684,
+                    14.216827551029272
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "27",
+                "pro_n_t": "สระแก้ว",
+                "pro_n_e": "Sa Kaeo"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    102.320267186602294,
+                    13.785998465481994
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "20",
+                "pro_n_t": "ชลบุรี",
+                "pro_n_e": "CHON BURI"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    101.201309014047155,
+                    13.192739874189563
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "21",
+                "pro_n_t": "ระยอง",
+                "pro_n_e": "RAYONG"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    101.425649319512615,
+                    12.856183257847706
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "22",
+                "pro_n_t": "จันทบุรี",
+                "pro_n_e": "Chanthaburi"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    102.128864380275161,
+                    12.878020344104867
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "49",
+                "pro_n_t": "มุกดาหาร",
+                "pro_n_e": "MUKDAHAN"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    104.515194609560652,
+                    16.567049234167772
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "46",
+                "pro_n_t": "กาฬสินธุ์",
+                "pro_n_e": "KALASIN"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    103.621587402185497,
+                    16.627982296401946
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "47",
+                "pro_n_t": "สกลนคร",
+                "pro_n_e": "SAKON NAKHON"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    103.824368177585612,
+                    17.390143962221607
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "44",
+                "pro_n_t": "มหาสารคาม",
+                "pro_n_e": "MAHA SARAKHAM"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    103.165950210909756,
+                    15.999284254322946
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "45",
+                "pro_n_t": "ร้อยเอ็ด",
+                "pro_n_e": "ROI ET"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    103.814010140078935,
+                    15.919987550725171
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "42",
+                "pro_n_t": "เลย",
+                "pro_n_e": "LOEI"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    101.631875496430339,
+                    17.406740110227048
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "43",
+                "pro_n_t": "หนองคาย",
+                "pro_n_e": "Nongkhai"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    102.82456156883849,
+                    17.939099910766274
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "40",
+                "pro_n_t": "ขอนแก่น",
+                "pro_n_e": "KHON KAEN"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    102.578176592245356,
+                    16.408784777317955
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "41",
+                "pro_n_t": "อุดรธานี",
+                "pro_n_e": "UDON THANI"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    102.865232602267938,
+                    17.425038060064857
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "35",
+                "pro_n_t": "ยโสธร",
+                "pro_n_e": "YASOTHON"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    104.339171952198157,
+                    15.897807598581833
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "14",
+                "pro_n_t": "พระนครศรีอยุธยา",
+                "pro_n_e": "PHRA NAKHON SI AYUTTHAYA"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    100.526771663327963,
+                    14.345359522222758
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "23",
+                "pro_n_t": "ตราด",
+                "pro_n_e": "TRAT"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    102.521059321124824,
+                    12.317091394997137
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "39",
+                "pro_n_t": "หนองบัวลำภู",
+                "pro_n_e": "NONG BUA LAM PHU"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    102.301700476321969,
+                    17.181136287014379
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "34",
+                "pro_n_t": "อุบลราชธานี",
+                "pro_n_e": "UBON RATCHATHANI"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    105.110733193159987,
+                    15.184834534380395
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "77",
+                "pro_n_t": "ประจวบคีรีขันธ์",
+                "pro_n_e": "PRACHUAP KHIRI KHAN"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    99.635423435679883,
+                    11.948496013703339
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "76",
+                "pro_n_t": "เพชรบุรี",
+                "pro_n_e": "PHETCHABURI"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    99.618088518422852,
+                    12.947732530161842
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "75",
+                "pro_n_t": "สมุทรสงคราม",
+                "pro_n_e": "SAMUT SONGKHRAM"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    99.953347531169115,
+                    13.398699962288035
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "74",
+                "pro_n_t": "สมุทรสาคร",
+                "pro_n_e": "SAMUT SAKHON"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    100.212652025978471,
+                    13.569898753615199
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "73",
+                "pro_n_t": "นครปฐม",
+                "pro_n_e": "NAKHON PATHOM"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    100.10487683564844,
+                    13.926793465418731
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "72",
+                "pro_n_t": "สุพรรณบุรี",
+                "pro_n_e": "SUPHAN BURI"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    99.892188141222533,
+                    14.611978815369886
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "71",
+                "pro_n_t": "กาญจนบุรี",
+                "pro_n_e": "KANCHANABURI"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    99.049892112086795,
+                    14.583322625173174
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "70",
+                "pro_n_t": "ราชบุรี",
+                "pro_n_e": "RATCHABURI"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    99.578986458280852,
+                    13.534509628464029
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "91",
+                "pro_n_t": "สตูล",
+                "pro_n_e": "SATUN"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    99.929479948632618,
+                    6.82689032485
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "90",
+                "pro_n_t": "สงขลา",
+                "pro_n_e": "SONGKHLA"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    100.557613432425313,
+                    6.899009225526965
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "93",
+                "pro_n_t": "พัทลุง",
+                "pro_n_e": "PHATTHALUNG"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    100.043247068007574,
+                    7.509590581829708
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "92",
+                "pro_n_t": "ตรัง",
+                "pro_n_e": "TRANG"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    99.605244911717449,
+                    7.536037115574157
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "95",
+                "pro_n_t": "ยะลา",
+                "pro_n_e": "YALA"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    101.228000622098548,
+                    6.191512207167433
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "94",
+                "pro_n_t": "ปัตตานี",
+                "pro_n_e": "PATTANI"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    101.351335745669545,
+                    6.73079393849732
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "32",
+                "pro_n_t": "สุรินทร์",
+                "pro_n_e": "SURIN"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    103.656225584394505,
+                    14.886569375943097
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "96",
+                "pro_n_t": "นราธิวาส",
+                "pro_n_e": "NARATHIWAT"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    101.718702543867181,
+                    6.178158638526306
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "11",
+                "pro_n_t": "สมุทรปราการ",
+                "pro_n_e": "SAMUT PRAKAN"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    100.708847904486817,
+                    13.595172550577908
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "10",
+                "pro_n_t": "กรุงเทพมหานคร",
+                "pro_n_e": "BANGKOK"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    100.623574414465978,
+                    13.771614610523203
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "13",
+                "pro_n_t": "ปทุมธานี",
+                "pro_n_e": "PHATHUM THANI"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    100.681962168580171,
+                    14.065140925232953
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "38",
+                "pro_n_t": "บึงกาฬ",
+                "pro_n_e": "Bueangkan"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    103.709677000871181,
+                    18.148121860052051
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "15",
+                "pro_n_t": "อ่างทอง",
+                "pro_n_e": "ANG THONG"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    100.348897042708643,
+                    14.622841757535353
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "58",
+                "pro_n_t": "แม่ฮ่องสอน",
+                "pro_n_e": "MAE HONG SON"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    98.030374499423246,
+                    18.811461849968996
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "17",
+                "pro_n_t": "สิงห์บุรี",
+                "pro_n_e": "SING BURI"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    100.346835711173867,
+                    14.914928965084362
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "16",
+                "pro_n_t": "ลพบุรี",
+                "pro_n_e": "LOP BURI"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    100.899200924030239,
+                    15.096243356985543
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "19",
+                "pro_n_t": "สระบุรี",
+                "pro_n_e": "SARABURI"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    101.016160439567457,
+                    14.627286336996068
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "18",
+                "pro_n_t": "ชัยนาท",
+                "pro_n_e": "CHAI NAT"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    100.024831239301619,
+                    15.132998420808191
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "31",
+                "pro_n_t": "บุรีรัมย์",
+                "pro_n_e": "BURI RAM"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    102.956973264594581,
+                    14.821318390670344
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "30",
+                "pro_n_t": "นครราชสีมา",
+                "pro_n_e": "NAKHON RATCHASIMA"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    102.108517812788008,
+                    14.959017890392976
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "51",
+                "pro_n_t": "ลำพูน",
+                "pro_n_e": "LAMPHUN"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    98.954696709714852,
+                    18.119010815997072
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "50",
+                "pro_n_t": "เชียงใหม่",
+                "pro_n_e": "CHIANG MAI"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    98.726300595700167,
+                    18.786827566408682
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "53",
+                "pro_n_t": "อุตรดิตถ์",
+                "pro_n_e": "UTTARADIT"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    100.51715908255305,
+                    17.749300337801241
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "52",
+                "pro_n_t": "ลำปาง",
+                "pro_n_e": "LAMPANG"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    99.511924571718382,
+                    18.326270728362868
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "33",
+                "pro_n_t": "ศรีสะเกษ",
+                "pro_n_e": "SI SA KET"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    104.36901102089351,
+                    14.857592305747382
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "55",
+                "pro_n_t": "น่าน",
+                "pro_n_e": "NAN"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    100.833100056343227,
+                    18.847851818857453
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "48",
+                "pro_n_t": "นครพนม",
+                "pro_n_e": "NAKHON PHANOM"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    104.427850274227552,
+                    17.389552741555867
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "12",
+                "pro_n_t": "นนทบุรี",
+                "pro_n_e": "NONTHABURI"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    100.393167389466512,
+                    13.923839687363232
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "pro_code": "57",
+                "pro_n_t": "เชียงราย",
+                "pro_n_e": "CHIANG RAI"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    99.866016933031091,
+                    19.847316995121222
+                ]
+            }
+        }
+    ]
+}
