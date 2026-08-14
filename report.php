@@ -19,6 +19,9 @@ include("./config/ssDBclose.php");
 $datefrom = trim($_GET['datefrom'] ?? '');
 $dateto   = trim($_GET['dateto']   ?? '');
 
+$year_thai = (int) date('Y') + 543;
+$update_thaidate = $year_thai . date('-m-d');
+$time_h = (int) date('H');
 if ($datefrom && $dateto && !empty($branchList)) {
     $branchno = implode(',', $branchList);
     $df = pg_escape_string($connections, $datefrom);
@@ -45,6 +48,29 @@ if ($datefrom && $dateto && !empty($branchList)) {
         $row['date_disp'] = $yr . substr($row['created_at'], 4, 7);
         $row['amount']    = !empty($row['ap_total']) ? number_format((float)$row['ap_total'], 2) : '';
         $row['status_label'] = $status_map[$row['status']] ?? '';
+
+
+        $ap_date_disp = '';
+        if (!empty($row['ap_no']) && !empty($row['ap_date'])       ) {
+            if ($update_thaidate > $row['ap_date'] || ($update_thaidate == $row['ap_date'] && $time_h >= 17))
+                $ap_date_disp = $row['ap_date'];
+        }
+
+        if ($row['status'] === '5'){
+            if ($update_thaidate <= $row['ap_date']){
+                $row['status_label'] = 'Payment pending';
+            } else {
+                $row['status_label'] = 'Paid';
+            }
+        }
+
+        // Requirement: If the payment date is before or equal to 2569-08-01, clear the AP number, AP date, and amount fields
+        if ($ap_date_disp !== '' && $ap_date_disp <= '2569-08-01') {
+            $row['ap_no'] = '';
+            $row['ap_date'] = '';
+            $row['amount'] = '';
+        }
+
         $rows_data[] = $row;
     }
 
@@ -68,7 +94,7 @@ if ($datefrom && $dateto && !empty($branchList)) {
             <th>ชื่อลูกค้า</th>
             <th>เลขที่ AP</th>
             <th>วันที่จ่าย</th>
-            <!-- <th>จำนวนเงิน</th> -->
+            <th>จำนวนเงิน</th>
             <th>สถานะ</th>
             <th>หมายเหตุ</th>
         </tr>
@@ -83,7 +109,7 @@ if ($datefrom && $dateto && !empty($branchList)) {
             <td><?php echo htmlspecialchars($row['customername']); ?></td>
             <td><?php echo htmlspecialchars($row['ap_no'] ?? ''); ?></td>
             <td><?php echo htmlspecialchars($row['ap_date'] ?? ''); ?></td>
-            <!-- <td><?php echo $row['amount']; ?></td> -->
+            <td><?php echo htmlspecialchars($row['amount']); ?></td>
             <td><?php echo htmlspecialchars($row['status_label']); ?></td>
             <td><?php echo htmlspecialchars($row['comment'] ?? ''); ?></td>
         </tr>

@@ -133,6 +133,8 @@ include("../config/dbcloseconnect.php");
                                     <th>จัดการ</th>
                                     <th>สถานะ</th>
                                     <th>วันที่จ่าย</th>
+                                    <th>เอกสารจ่าย</th>
+                                    <th>จำนวนเงิน</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -258,6 +260,8 @@ include("../config/dbcloseconnect.php");
                     { data: 5, orderable: false },             // จัดการ
                     { data: 6, width: '110px' },               // สถานะ
                     { data: 7, width: '100px' },               // วันที่จ่าย
+                    { data: 8, width: '110px' },               // เอกสารจ่าย
+                    { data: 9, width: '100px' },               // จำนวนเงิน
                 ],
 
                 order: [[2, 'desc']],

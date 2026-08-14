@@ -10,7 +10,7 @@ $branchgroup = $_SESSION['branchgroup'];
 ?>
 <!DOCTYPE html>
 <html lang="th">
-<head>
+<!-- <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SJ Dealer App — เพิ่มข้อมูล</title>
@@ -19,6 +19,25 @@ $branchgroup = $_SESSION['branchgroup'];
     <link href="./style/style.css?v=2" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+</head> -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SJ Dealer App — เพิ่มข้อมูล</title>
+    
+    <!-- เปลี่ยน ./ เป็น / นำหน้าสำหรับ assets และ styles -->
+    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS: เปลี่ยนเป็น Absolute path / และเพิ่ม Query param เพื่อล้างแคช -->
+    <link href="/style/style.css?v=<?php echo time(); ?>" rel="stylesheet">
+    <!-- หมายเหตุ: ถ้าไม่ได้ใช้ PHP ให้เปลี่ยน ?v=2 เป็น ?v=3 หรือเลขใหม่ไปเรื่อยๆ เมื่อแก้ไขไฟล์ CSS -->
+
+    <!-- JS Scripts (แนะนำย้ายไปไว้ก่อนปิด </body> หากต้องการให้โหลดหน้าไวขึ้น แต่ถ้าจำเป็นไว้ใน head ให้ใส่ defer ไว้) -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 
@@ -135,28 +154,122 @@ $branchgroup = $_SESSION['branchgroup'];
     </div>
 </div>
 <?php endif; ?>
+<!-- modal for notice -->
+<div class="modal fade" id="noticeModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow rounded-4">
+            <div class="modal-header border-0 pb-0 justify-content-end">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center pt-0 pb-4 px-4">
+                <div class="notice-icon mb-3">!</div>
+                <h5 class="fw-bold mb-1 notice-title" id="noticeModalTitle"></h5>
+                <p class="mb-3 notice-subtitle" id="noticeModalSubtitle"></p>
+                <div class="notice-info-box text-center d-none" id="noticeModalBody"></div>
+            </div>
+            <div class="modal-footer border-0 pt-0 px-4 pb-4">
+                <button type="button" class="btn-notice-close btn w-100" data-bs-dismiss="modal">ปิด</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
+var lastmachineCheckTimer = null;
+var lastmachineLastAlerted = '';
+var noticeModal = null;
+
+function showNoticeModal(message, title, infoHtml) {
+    if (!noticeModal) {
+        noticeModal = new bootstrap.Modal(document.getElementById('noticeModal'));
+    }
+
+    $("#noticeModalTitle").text(title || 'ไม่สามารถบันทึกข้อมูลได้');
+    $("#noticeModalSubtitle").text(message);
+
+    var $body = $("#noticeModalBody");
+    if (infoHtml) {
+        $body.html(infoHtml).removeClass('d-none');
+    } else {
+        $body.empty().addClass('d-none');
+    }
+    noticeModal.show();
+}
+
 function chk_sizefile(id) {
     var file = document.getElementById("picture" + id).files[0];
     if (file && file.size >= 20971520) {
-        alert("ไฟล์ที่อัพโหลดเกินขนาด (สูงสุด 20 MB)");
+        showNoticeModal("ไฟล์ที่อัพโหลดเกินขนาด (สูงสุด 20 MB)");
         var c = document.getElementById("file" + id);
         c.innerHTML = c.innerHTML;
     }
 }
+
+function checkLastMachineNo(forceCheck) {
+    var machineNo = $("#lastmachine_no").val().trim();
+    var shouldForceCheck = forceCheck === true;
+
+    if (!/^\d{6}$/.test(machineNo)) {
+        return $.Deferred().resolve({ exists: false }).promise();
+    }
+
+    if (!shouldForceCheck && machineNo === lastmachineLastAlerted) {
+        return $.Deferred().resolve({ exists: false }).promise();
+    }
+
+    return $.ajax({
+        type: "POST",
+        url: "check_lastmachine.php",
+        dataType: "json",
+        data: { lastmachine_no: machineNo },
+        success: function (response) {
+            if (response && response.exists) {
+                lastmachineLastAlerted = machineNo;
+                showNoticeModal(
+                    "เนื่องจากเลขถังนี้มีอยู่ในระบบแล้ว",
+                    "ไม่สามารถบันทึกข้อมูลได้",
+                    'หากต้องการบันทึกเลขถังนี้อีกครั้ง กรุณาติดต่อฝ่ายบัญชีสมใจ <br>' +
+                    'ผ่าน <b style="color:#2563eb;">E-mail: dl-ap-invoice@cjk-cr.com</b> หรือ <b style="color:#45d44c;">Group LINE</b> ของดีลเลอร์ <br>' +
+                    'เพื่อให้เจ้าหน้าที่ตรวจสอบและดำเนินการ'
+                );
+            }
+        }
+    });
+}
+
 function confirm_submit() {
-    if (!$("#lastmachine_no").val() || !$("#selectbranch").val() || !$("#customername").val() || !$("#picture1").val()) {
-        alert('กรุณากรอกข้อมูลให้ครบ'); return;
+    if (!$("#lastmachine_no").val() || !$("#selectbranch").val() || !$("#customername").val()) {
+
+        showNoticeModal('กรุณากรอกข้อมูลให้ครบ');
+        return;
     }
-    if (confirm("ยืนยันการเพิ่มข้อมูล?")) {
-        document.getElementById('loadingOverlay').style.display = 'flex';
-        document.forms["submititem"].submit();
-    }
+
+    checkLastMachineNo(true).done(function (response) {
+        if (response && response.exists) {
+            return;
+        }
+
+        if (confirm("ยืนยันการเพิ่มข้อมูล?")) {
+            document.getElementById('loadingOverlay').style.display = 'flex';
+            document.forms["submititem"].submit();
+        }
+    });
 }
 $(document).ready(function () {
-    $("#lastmachine_no").on("change", function () {
-        if (!/^[0-9]+$/.test(this.value)) { alert('⛔️ กรุณากรอกเลขถังด้วยตัวเลขจำนวน 6 หลักเท่านั้น!'); $(this).val(''); }
+    document.getElementById('noticeModal').addEventListener('hidden.bs.modal', function () {
+        var lastmachineInput = document.getElementById('lastmachine_no');
+        if (lastmachineInput) {
+            lastmachineInput.focus();
+            lastmachineInput.select();
+        }
+    });
+
+    $("#lastmachine_no").on("input", function () {
+        this.value = this.value.replace(/\D/g, '').slice(0, 6);
+        lastmachineLastAlerted = '';
+
+        clearTimeout(lastmachineCheckTimer);
+        lastmachineCheckTimer = setTimeout(checkLastMachineNo, 350);
     });
     $("#selectbranch").on("change", function () {
         var m = $("#lastmachine_no").val(), b = $("#selectbranch").val();

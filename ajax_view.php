@@ -71,10 +71,8 @@ while ($row = pg_fetch_object($result)) {
             $status = 'Processing';
             break;
         case 5:
-            if ($ap_no_empty || $update_thaidate < $row->ap_date) {
-                $status = 'Processing';
-            } elseif ($update_thaidate == $row->ap_date) {
-                $status = $time_h < 17 ? 'Processing' : 'Paid';
+            if ($ap_no_empty || $update_thaidate <= $row->ap_date) {
+                $status = 'PaymentPending';
             } else {
                 $status = 'Paid';
             }
@@ -97,7 +95,8 @@ while ($row = pg_fetch_object($result)) {
             $ap_date_disp = $row->ap_date;
     }
 
-    $badge = ['Pending' => 'badge-pending', 'Processing' => 'badge-processing', 'Paid' => 'badge-paid', 'Reject' => 'badge-reject', 'Cancel' => 'badge-cancel'][$status] ?? '';
+
+    $badge = ['Pending' => 'badge-pending', 'Processing' => 'badge-processing', 'PaymentPending' => 'badge-payment-pending', 'Paid' => 'badge-paid', 'Reject' => 'badge-reject', 'Cancel' => 'badge-cancel'][$status] ?? '';
     $status_html = "<span class='badge-status $badge'>$status</span>";
 
     $doc_links = '';
@@ -163,6 +162,13 @@ while ($row = pg_fetch_object($result)) {
         $amount_disp = number_format((float) $row->ap_total, 2) . ' ฿';
     }
 
+    // Requirement: If the payment date is before or equal to 2569-08-01, clear the AP number, AP date, and amount fields
+    if ($ap_date_disp !== '' && $ap_date_disp <= '2569-08-01') {
+        $ap_no_disp = '';
+        $ap_date_disp = '';
+        $amount_disp = '';
+    }
+
     $data[] = [
         $date_disp,
         htmlspecialchars($row->branchno),
@@ -170,9 +176,9 @@ while ($row = pg_fetch_object($result)) {
         htmlspecialchars($row->customername),
         $btn_file,
         $status_html,
-        $ap_no_disp,
-        $ap_date_disp,
-        $amount_disp,
+        $ap_date_disp, // Display AP date
+        $ap_no_disp, // Display AP number
+        $amount_disp, // Display AP total
         '<span style="color:#ef4444;">' . htmlspecialchars($row->comment ?? '') . '</span>',
         $cancel_html,
     ];

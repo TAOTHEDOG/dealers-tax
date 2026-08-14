@@ -160,55 +160,12 @@ body {
 .dataTables_wrapper .dataTables_length select { border: 1.5px solid var(--purple-200); border-radius: 8px; padding: .3rem .5rem; }
 
 /* ---- Notice Modal ---- */
-/* ---- Notice Modal ---- */
-.notice-icon { 
-  width: 64px !important; 
-  height: 64px !important; 
-  border-radius: 50% !important; 
-  border: 3px solid #ef4444 !important; 
-  color: #ef4444 !important; 
-  display: flex !important; 
-  align-items: center !important; 
-  justify-content: center !important; 
-  font-size: 2rem !important; 
-  font-weight: 700 !important; 
-  margin: 0 auto !important; 
-}
-
-.notice-title { 
-  color: #1f2937 !important; 
-  font-size: 1.15rem !important; 
-}
-
-.notice-subtitle { 
-  color: #6b7280 !important; 
-  font-size: .9rem !important; 
-}
-
-.notice-info-box { 
-  background-color: #f5f3ff !important; /* เปลี่ยนจาก var() เป็นรหัสสีจริง */
-  border-radius: 10px !important; 
-  padding: .9rem 1.1rem !important; 
-  font-size: .85rem !important; 
-  color: #374151 !important; 
-  line-height: 1.6 !important; 
-}
-
-.btn-notice-close { 
-  background-color: #2563eb !important; 
-  border: none !important; 
-  border-radius: 50px !important; 
-  color: #ffffff !important; 
-  font-weight: 600 !important; 
-  padding: .65rem 1rem !important; 
-  font-size: .95rem !important; 
-}
-
-.btn-notice-close:hover { 
-  opacity: .9 !important; 
-  color: #ffffff !important; 
-}
-
+.notice-icon { width: 64px; height: 64px; border-radius: 50%; border: 3px solid #ef4444; color: #ef4444; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 700; margin: 0 auto; }
+.notice-title { color: #1f2937; font-size: 1.15rem; }
+.notice-subtitle { color: #6b7280; font-size: .9rem; }
+.notice-info-box { background: var(--purple-50); border-radius: 10px; padding: .9rem 1.1rem; font-size: .85rem; color: #374151; line-height: 1.6; }
+.btn-notice-close { background: #2563eb; border: none; border-radius: 50px; color: #fff; font-weight: 600; padding: .65rem 1rem; font-size: .95rem; }
+.btn-notice-close:hover { opacity: .9; color: #fff; }
 table.dataTable thead th { background: var(--purple-600); color: #fff; font-weight: 600; font-size: .82rem; letter-spacing: .04em; text-transform: uppercase; border: none !important; padding: .85rem 1rem; }
 table.dataTable thead th:first-child { border-radius: 8px 0 0 0; }
 table.dataTable thead th:last-child  { border-radius: 0 8px 0 0; }

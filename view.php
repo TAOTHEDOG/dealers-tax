@@ -104,9 +104,9 @@ include("./config/ssDBclose.php");
                                 <th>ชื่อ-นามสกุลลูกค้า</th>
                                 <th>ไฟล์แนบ</th>
                                 <th>สถานะ</th>
-                                <th style="display:none;">เอกสารจ่าย</th>
-                                <th style="display:none;">วันที่จ่าย</th>
-                                <th style="display:none;">จำนวนเงิน</th>
+                                <th>วันที่จ่าย</th>
+                                <th>เอกสารจ่าย</th>
+                                <th>จำนวนเงิน</th>
                                 <th>หมายเหตุ</th>
                                 <th>ยกเลิก</th>
                             </tr>
@@ -150,9 +150,9 @@ $(document).ready(function () {
             { data: 3,  width: '160px' },  // ชื่อลูกค้า
             { data: 4,  width: '90px',  orderable: false },  // ไฟล์แนบ
             { data: 5,  width: '95px'  },  // สถานะ
-            { data: 6,  width: '110px', visible: false },  // เอกสารจ่าย
-            { data: 7,  width: '95px',  visible: false },  // วันที่จ่าย
-            { data: 8,  width: '100px', visible: false },  // จำนวนเงิน
+            { data: 6,  width: '110px', },  // วันที่จ่าย
+            { data: 7,  width: '95px',  },  // เลขที่เอกสารจ่าย
+            { data: 8,  width: '100px', },  // จำนวนเงิน
             { data: 9                  },  // หมายเหตุ
             { data: 10, width: '60px',  orderable: false },  // ยกเลิก
         ],

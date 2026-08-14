@@ -73,6 +73,8 @@ $result = pg_query($connections, $query);
 $is_cs    = ($_SESSION['role'] == "CS");
 $is_admin = ($_SESSION['role'] == "Admin");
 $hostname = $hostname ?? '';
+$year_thai = (int) date('Y') + 543;
+$update_thaidate = $year_thai . date('-m-d');
 
 $data = [];
 while ($row = pg_fetch_object($result)) {
@@ -114,8 +116,24 @@ while ($row = pg_fetch_object($result)) {
         }
     }
 
-    // ap_date display
-    $ap_date_disp = ($row->status == '5') ? htmlspecialchars($row->ap_date ?? '') : '';
+    // Payment status logic
+    $ap_no_empty = ($row->ap_no == null || $row->ap_no == '');
+    if ($row->status == '5' && ($ap_no_empty || $update_thaidate <= $row->ap_date)) {
+        $status_label = 'PaymentPending';
+        $badge_class = 'badge-payment-pending';
+        $status_html = "<span class='badge-status $badge_class'>$status_label</span>";
+    }
+
+    // Display AP number, date, and amount
+    $ap_no_disp = htmlspecialchars($row->ap_no ?? '');
+    $amount_disp = ($row->ap_total !== null) ? number_format((float)$row->ap_total, 2) . ' ฿' : '';
+    $ap_date_disp = htmlspecialchars($row->ap_date ?? '');
+    // Requirement: If the payment date is before or equal to 2569-08-01, clear the AP number, AP date, and amount fields
+    if ($ap_date_disp <= '2569-08-01') {
+        $ap_no_disp = '';
+        $ap_date_disp = '';
+        $amount_disp = '';
+    }
 
     $data[] = [
         htmlspecialchars($row->dealer ?? ''),
@@ -126,6 +144,8 @@ while ($row = pg_fetch_object($result)) {
         $actions,
         $status_html,
         $ap_date_disp,
+        $ap_no_disp,
+        $amount_disp,
     ];
 }
 
