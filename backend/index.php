@@ -63,7 +63,7 @@ include("../config/dbcloseconnect.php");
                 showConfirmButton: false,
                 timer: 3000
             }).then(function () {
-                window.location.href = <?php echo json_encode($hostname); ?> + '/backend/index.php';
+                // window.location.href = <?php echo json_encode($hostname); ?> + '/backend/index.php';
                 //window.location.href = <?php echo json_encode($hostname); ?> + '/backend/index.php';
 
             });
@@ -178,8 +178,7 @@ include("../config/dbcloseconnect.php");
                 <div class="modal-header" style="background:var(--purple-700); color:#fff;">
                     <h5 class="modal-title fw-bold">Reject Item</h5>
                 </div>
-                <form class="needs-validation" novalidate method="post" action="reject_item.php" id="reject_item"
-                    onsubmit="var m=document.getElementById('reject_machineno').value;return confirm('ยืนยันการ Reject รายการเลขถัง '+m+' ?');">
+                <form class="needs-validation" novalidate method="post" action="reject_item.php" id="reject_item">
                     <div class="modal-body">
                         <h6 class="fw-bold mb-2" style="color:var(--purple-700);">📎 รายการเอกสาร</h6>
                         <div id="data_reject_item" class="mb-3"></div>
@@ -246,6 +245,8 @@ include("../config/dbcloseconnect.php");
                 // ── Server-side: DB handles paging/sorting/searching ──
                 serverSide: true,
                 processing: true,
+                stateSave: true,
+                stateDuration: -1,
                 ajax: {
                     url: 'ajax_index.php',
                     type: 'POST'
@@ -422,6 +423,17 @@ include("../config/dbcloseconnect.php");
                 }, false);
             });
         })();
+        document.getElementById('reject_item').addEventListener('submit', function (e) {
+        if (!this.checkValidity()) {
+            e.preventDefault();
+            this.classList.add('was-validated');
+            return;
+        }
+        // ล็อคปุ่มทันทีที่กด เพื่อป้องกันการกดซ้ำ
+        const btn = this.querySelector('button[type="submit"]');
+        btn.disabled = true;
+        btn.innerText = 'กำลังบันทึก...';
+    });
     </script>
 </body>
 
