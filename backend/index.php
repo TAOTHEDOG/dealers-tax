@@ -9,6 +9,14 @@ if (!isset($_SESSION) || (($_SESSION['role'] != "Accountant") && ($_SESSION['rol
     return false;
 }
 
+// Map status codes to labels
+// {
+//     $status_map = [
+//         '1' => 'Pending', '2' => 'Processing', '3' => 'Processing',
+//         '4' => 'Processing', '5' => 'Paid', '6' => 'Reject', '7' => 'Cancel'
+//     ];
+// }
+
 // Summary counts only (lightweight)
 $q_total = pg_query(
     $connections,
@@ -18,13 +26,53 @@ $q_total = pg_query(
 );
 $rowcount = (int) pg_fetch_result($q_total, 0, 0);
 
+// Count items waiting for management (status 1 or 2)
 $q_wait = pg_query(
     $connections,
     "SELECT COUNT(*) FROM items
-     WHERE (status = '1' OR status = '2')
+     WHERE (status = '1')
      AND (tax_no <> 'TEST      ' OR tax_no IS NULL)"
 );
 $item_waitmanage = (int) pg_fetch_result($q_wait, 0, 0);
+
+// Count items in Processing (status 4)
+$q_processing = pg_query(
+    $connections,
+    "SELECT COUNT(*) FROM items
+     WHERE status IN ('2', '3')
+     AND (tax_no <> 'TEST      ' OR tax_no IS NULL)"
+);
+$item_processing = (int) pg_fetch_result($q_processing, 0, 0);
+
+// Count items in Paid (status 5)
+$q_paid = pg_query(
+    $connections,
+    "SELECT COUNT(*) FROM items
+     WHERE status = '5'
+     AND (tax_no <> 'TEST      ' OR tax_no IS NULL)"
+);
+$item_paid = (int) pg_fetch_result($q_paid, 0, 0);
+
+// Count items in Reject (status 6)
+$q_reject = pg_query(
+    $connections,
+    "SELECT COUNT(*) FROM items
+     WHERE status = '6'
+     AND (tax_no <> 'TEST      ' OR tax_no IS NULL)"
+);
+$item_reject = (int) pg_fetch_result($q_reject, 0, 0);
+
+// Count items in Cancel (status 7)
+$q_cancel = pg_query(
+    $connections,
+    "SELECT COUNT(*) FROM items
+     WHERE status = '7'
+     AND (tax_no <> 'TEST      ' OR tax_no IS NULL)"
+);
+$item_cancel = (int) pg_fetch_result($q_cancel, 0, 0);
+$init_status = 0;
+
+
 
 include("../config/dbcloseconnect.php");
 ?>
@@ -52,6 +100,99 @@ include("../config/dbcloseconnect.php");
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
+<style>
+  /* Container ใหญ่ด้านนอก */
+.status-navbar-wrapper {
+    width: 100%;
+    overflow-x: auto; /* เผื่อหน้าจอเล็กให้เลื่อนแนวนอนได้ */
+    border-bottom: 1px solid #eef0f6;
+    background: #ffffff;
+}
+
+.status-navbar {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 0;
+}
+
+/* แต่ละ Tap Item */
+.nav-tab-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #64748b;
+    transition: all 0.2s ease-in-out;
+    white-space: nowrap;
+    position: relative;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.nav-tab-item:hover {
+    background-color: #f8fafc;
+}
+
+/* ตัวเลขสถิติ Pill Badge ด้านขวา */
+.tab-count {
+    background-color: #f1f5f9;
+    color: #475569;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-left: 4px;
+}
+
+/* เส้นกั้นแบ่งระหว่างปุ่ม */
+.tab-divider {
+    width: 1px;
+    height: 20px;
+    background-color: #e2e8f0;
+    margin: 0 4px;
+}
+
+/* สีของข้อความและไอคอนแต่ละสถานะ */
+.nav-tab-item .tab-icon { color: #8b5cf6; }
+.nav-tab-item.status-pending { color: #f59e0b; }
+.nav-tab-item.status-pending .tab-icon { color: #f59e0b; }
+
+.nav-tab-item.status-processing { color: #3b82f6; }
+.nav-tab-item.status-processing .tab-icon { color: #3b82f6; }
+
+.nav-tab-item.status-reject { color: #ef4444; }
+.nav-tab-item.status-reject .tab-icon { color: #ef4444; }
+
+.nav-tab-item.status-paid { color: #10b981; }
+.nav-tab-item.status-paid .tab-icon { color: #10b981; }
+
+.nav-tab-item.status-cancel { color: #64748b; }
+.nav-tab-item.status-cancel .tab-icon { color: #64748b; }
+
+/* Active State (สถานะที่กำลังถูกเลือกอยู่) */
+.nav-tab-item.active {
+    background-color: #f5f3ff !important;
+    border-bottom-color: #7c3aed !important;
+    color: #6d28d9 !important;
+}
+
+.nav-tab-item.active .tab-icon {
+    color: #6d28d9 !important;
+}
+
+.nav-tab-item.active .tab-count {
+    background-color: #ffffff;
+    color: #6d28d9;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+</style>
 
 <body>
 
@@ -118,9 +259,103 @@ include("../config/dbcloseconnect.php");
                         </div>
                     </div>
                 </div>
-
                 <!-- Table card -->
                 <div class="table-container">
+                    <!-- Filter Status Row -->
+                    <!-- Status Navigation Bar -->
+                    <div class="status-navbar-wrapper mb-4">
+                        <div class="status-navbar">
+                            <!-- ทั้งหมด -->
+                            <button type="button"
+                                class="nav-tab-item <?php echo $init_status == 'all' ? 'active' : ''; ?>"
+                                data-status="all">
+                                <svg class="tab-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                                <span class="tab-text">ทั้งหมด</span>
+                                <span class="tab-count"><?php echo number_format($rowcount); ?></span>
+                            </button>
+
+                            <div class="tab-divider"></div>
+
+                            <!-- Pending (รอดำเนินการ) -->
+                            <button type="button"
+                                class="nav-tab-item status-pending <?php echo $init_status == '1' ? 'active' : ''; ?>"
+                                data-status="1">
+                                <svg class="tab-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <span class="tab-text">Pending</span>
+                                <span class="tab-count"><?php echo number_format($item_waitmanage); ?></span>
+                            </button>
+
+                            <div class="tab-divider"></div>
+
+                            <!-- Processing -->
+                            <button type="button"
+                                class="nav-tab-item status-processing <?php echo $init_status == '2' ? 'active' : ''; ?>"
+                                data-status="2">
+                                <svg class="tab-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                </svg>
+                                <span class="tab-text">Processing</span>
+                                <span class="tab-count"><?php echo number_format($item_processing); ?></span>
+                            </button>
+
+                            <div class="tab-divider"></div>
+
+                            <!-- Reject -->
+                            <button type="button"
+                                class="nav-tab-item status-reject <?php echo $init_status == '6' ? 'active' : ''; ?>"
+                                data-status="6">
+                                <svg class="tab-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <span class="tab-text">Reject</span>
+                                <span class="tab-count"><?php echo number_format($item_reject); ?></span>
+                            </button>
+
+                            <div class="tab-divider"></div>
+
+                            <!-- Paid -->
+                            <button type="button"
+                                class="nav-tab-item status-paid <?php echo $init_status == '3' || $init_status == '5' ? 'active' : ''; ?>"
+                                data-status="3">
+                                <svg class="tab-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <span class="tab-text">Paid</span>
+                                <span class="tab-count"><?php echo number_format($item_paid); ?></span>
+                            </button>
+
+                            <div class="tab-divider"></div>
+
+                            <!-- Cancel -->
+                            <button type="button"
+                                class="nav-tab-item status-cancel <?php echo $init_status == '7' ? 'active' : ''; ?>"
+                                data-status="7">
+                                <svg class="tab-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                                </svg>
+                                <span class="tab-text">Cancel</span>
+                                <span class="tab-count"><?php echo number_format($item_cancel); ?></span>
+                            </button>
+
+                        </div>
+                    </div>
+
                     <div class="table-responsive">
                         <table id="myTable" class="display w-100">
                             <thead>
@@ -240,16 +475,20 @@ include("../config/dbcloseconnect.php");
     </div>
 
     <script>
+        var currentStatus = <?php echo json_encode($init_status); ?>;
+        console.log("Initial status:", currentStatus);
         $(document).ready(function () {
-            $("#myTable").DataTable({
-                // ── Server-side: DB handles paging/sorting/searching ──
+            var table = $("#myTable").DataTable({
                 serverSide: true,
                 processing: true,
                 stateSave: true,
                 stateDuration: -1,
                 ajax: {
                     url: 'ajax_index.php',
-                    type: 'POST'
+                    type: 'POST',
+                    data: function (d) {
+                        d.status = currentStatus;
+                    }
                 },
 
                 columns: [
@@ -287,6 +526,30 @@ include("../config/dbcloseconnect.php");
                     processing: '<div class="text-center py-3" style="color:var(--purple-600);font-weight:600;">กำลังโหลดข้อมูล...</div>'
                 }
             });
+
+            // Filter button click handler
+
+            $(document).ready(function () {
+                $('.nav-tab-item').on('click', function () {
+                    // เอา class active ออกจากทุกปุ่ม แล้วใส่ให้ปุ่มที่กด
+                    $('.nav-tab-item').removeClass('active');
+                    $(this).addClass('active');
+
+                    // ดึงค่า status แล้วสั่งรีโหลด DataTables
+                    currentStatus = $(this).data('status');
+                    if (typeof table !== 'undefined') {
+                        table.ajax.reload();
+                    }
+                });
+            });
+            // $('.btn-status-filter').on('click', function () {
+            //     $('.btn-status-filter').removeClass('btn-purple').addClass('btn-outline-purple');
+            //     $(this).removeClass('btn-outline-purple').addClass('btn-purple');
+
+            //     currentStatus = $(this).data('status');
+            //     console.log("Current status set to:", currentStatus);
+            //     table.ajax.reload();
+            // });
         });
 
         function updateData() {
@@ -424,16 +687,16 @@ include("../config/dbcloseconnect.php");
             });
         })();
         document.getElementById('reject_item').addEventListener('submit', function (e) {
-        if (!this.checkValidity()) {
-            e.preventDefault();
-            this.classList.add('was-validated');
-            return;
-        }
-        // ล็อคปุ่มทันทีที่กด เพื่อป้องกันการกดซ้ำ
-        const btn = this.querySelector('button[type="submit"]');
-        btn.disabled = true;
-        btn.innerText = 'กำลังบันทึก...';
-    });
+            if (!this.checkValidity()) {
+                e.preventDefault();
+                this.classList.add('was-validated');
+                return;
+            }
+            // ล็อคปุ่มทันทีที่กด เพื่อป้องกันการกดซ้ำ
+            const btn = this.querySelector('button[type="submit"]');
+            btn.disabled = true;
+            btn.innerText = 'กำลังบันทึก...';
+        });
     </script>
 </body>
 

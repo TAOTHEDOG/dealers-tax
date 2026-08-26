@@ -19,7 +19,6 @@ $draw   = intval($_POST['draw']   ?? 1);
 $start  = intval($_POST['start']  ?? 0);
 $length = intval($_POST['length'] ?? 25);
 $search = pg_escape_string($connections, $_POST['search']['value'] ?? '');
-$status_filter_param = $_POST['status'] ?? 'all';
 
 // Columns available for ordering
 $columns = [
@@ -37,39 +36,20 @@ $orderIdx = intval($_POST['order'][0]['column'] ?? 2);
 $orderDir = ($_POST['order'][0]['dir'] ?? 'desc') === 'asc' ? 'ASC' : 'DESC';
 $orderCol = $columns[$orderIdx] ?? 'items.created_at';
 
-// Base filter: not checked, no test records
+// Base filter: not checked, not cancelled, no test records
 $base_filter = "items.ischeck = FALSE
+                AND items.status <> '7'
                 AND (items.tax_no <> 'TEST      ' OR items.tax_no IS NULL)";
-
-// เพิ่มเงื่อนไขการกรองตามสถานะ (Status Filter)
-if ($status_filter_param === '1') {
-    // รอดำเนินการ (status 1)
-    $base_filter .= " AND items.status = '1'";
-} elseif ($status_filter_param === '2') {
-    // Processing (status 4)
-    $base_filter .= " AND (items.status = '2' OR items.status = '3')";
-} elseif ($status_filter_param === '3') {
-    // จ่ายแล้ว (status 5)
-    $base_filter .= " AND items.status = '5'";
-} elseif ($status_filter_param === '6') {
-    // Reject (status 6)
-    $base_filter .= " AND items.status = '6'";
-} elseif ($status_filter_param === '7') {
-    // ยกเลิก (status 7)
-    $base_filter .= " AND items.status = '7'";
-} else {
-    // กรณีเลือกดูทั้งหมด (all) หรือไม่ได้ส่งค่ามา จะซ่อน status 7 เป็นค่าเริ่มต้นตามเดิม
-    $base_filter .= " AND items.status <> '7'";
-}
 
 $search_filter = '';
 if ($search !== '') {
     $search_filter = " AND (items.lastmachine_no ILIKE '%$search%'
                         OR items.customername ILIKE '%$search%'
                         OR items.branchno ILIKE '%$search%'
-                        OR users.dealer ILIKE '%$search%'
-                        OR items.created_at::varchar ILIKE '%$search%'
-                        OR items.ap_date::varchar ILIKE '%$search%')";
+                        OR users.dealer ILIKE '%$search%')
+                        OR items.created_at::varchar  ILIKE '%$search%'
+                        OR items.ap_date::varchar  ILIKE '%$search%'
+                        ";
 }
 
 $join = "FROM items LEFT JOIN users ON items.dealer_id = users.id";
@@ -107,7 +87,7 @@ while ($row = pg_fetch_object($result)) {
     // Status label
     $status_map = [
         '1' => 'Pending', '2' => 'Processing', '3' => 'Processing',
-        '4' => 'Edit machineno', '5' => 'Paid', '6' => 'Reject', '7' => 'Cancel'
+        '4' => 'Edit machineno', '5' => 'Paid', '6' => 'Reject',
     ];
     $status_label = $status_map[$row->status] ?? '—';
 
@@ -117,7 +97,6 @@ while ($row = pg_fetch_object($result)) {
         'Edit machineno'  => 'badge-pending',
         'Paid'            => 'badge-paid',
         'Reject'          => 'badge-reject',
-        'Cancel'          => 'badge-reject',
     ][$status_label] ?? '';
     $status_html = "<span class='badge-status $badge_class'>$status_label</span>";
 
@@ -149,6 +128,7 @@ while ($row = pg_fetch_object($result)) {
     $ap_no_disp = htmlspecialchars($row->ap_no ?? '');
     $amount_disp = ($row->ap_total !== null) ? number_format((float)$row->ap_total, 2) . ' ฿' : '';
     $ap_date_disp = htmlspecialchars($row->ap_date ?? '');
+    // Requirement: If the payment date is before or equal to 2569-08-01, clear the AP number, AP date, and amount fields
     if ($ap_date_disp <= '2569-08-01') {
         $ap_no_disp = '';
         $ap_date_disp = '';

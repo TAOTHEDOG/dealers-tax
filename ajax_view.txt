@@ -26,15 +26,11 @@ $start = intval($_POST['start'] ?? 0);
 $length = intval($_POST['length'] ?? 25);
 $search = pg_escape_string($connections, $_POST['search']['value'] ?? '');
 
-$status_filter_param = $_POST['status'] ?? 'all';
-
 // col index: 0=created_at,1=branchno,2=lastmachine_no,3=customername,4=doc1(orderable:false),5=status,6=ap_no,7=ap_date,8=ap_total,9=comment,10=id(orderable:false)
 $columns = ['created_at', 'branchno', 'lastmachine_no', 'customername', 'doc1', 'status', 'ap_no', 'ap_date', 'ap_total', 'comment', 'id'];
 $orderIdx = intval($_POST['order'][0]['column'] ?? 0);
 $orderDir = ($_POST['order'][0]['dir'] ?? 'desc') === 'asc' ? 'ASC' : 'DESC';
 $orderCol = $columns[$orderIdx] ?? 'created_at';
-
-
 
 $where = "branchno IN ($branchno)";
 if ($search !== '') {
@@ -49,31 +45,8 @@ if ($search !== '') {
         comment              ILIKE '%$search%'
     )";
 }
-if ($status_filter_param) {
-    // เพิ่มเงื่อนไขการกรองตามสถานะ (Status Filter)
-    if ($status_filter_param === '1') {
-        // รอดำเนินการ (status 1)
-        $where .= " AND items.status = '1'";
-    } elseif ($status_filter_param === '2') {
-        // Processing (status 4)
-        $where .= " AND (items.status = '2' OR items.status = '3')";
-    } elseif ($status_filter_param === '3') {
-        // จ่ายแล้ว (status 5)
-        $where .= " AND items.status = '5'";
-    } elseif ($status_filter_param === '6') {
-        // Reject (status 6)
-        $where .= " AND items.status = '6'";
-    } elseif ($status_filter_param === '7') {
-        // ยกเลิก (status 7)
-        $where .= " AND items.status = '7'";
-    } else {
-        // กรณีเลือกดูทั้งหมด (all) หรือไม่ได้ส่งค่ามา จะซ่อน status 7 เป็นค่าเริ่มต้นตามเดิม
-        $where .= " AND items.status <> '7'";
-    }
 
-}
-
-$r_total = pg_query($connections, "SELECT COUNT(*) FROM items WHERE $where");
+$r_total = pg_query($connections, "SELECT COUNT(*) FROM items WHERE branchno IN ($branchno)");
 $total = (int) pg_fetch_result($r_total, 0, 0);
 $r_filt = pg_query($connections, "SELECT COUNT(*) FROM items WHERE $where");
 $filtered = (int) pg_fetch_result($r_filt, 0, 0);
