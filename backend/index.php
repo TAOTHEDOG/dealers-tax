@@ -101,97 +101,126 @@ include("../config/dbcloseconnect.php");
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <style>
-  /* Container ใหญ่ด้านนอก */
-.status-navbar-wrapper {
-    width: 100%;
-    overflow-x: auto; /* เผื่อหน้าจอเล็กให้เลื่อนแนวนอนได้ */
-    border-bottom: 1px solid #eef0f6;
-    background: #ffffff;
-}
+    /* Container ใหญ่ด้านนอก */
+    .status-navbar-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        /* เผื่อหน้าจอเล็กให้เลื่อนแนวนอนได้ */
+        border-bottom: 1px solid #eef0f6;
+        background: #ffffff;
+    }
 
-.status-navbar {
-    display: flex;
-    align-items: center;
-    gap: 0;
-    padding: 0;
-}
+    .status-navbar {
+        display: flex;
+        align-items: center;
+        gap: 0;
+        padding: 0;
+    }
 
-/* แต่ละ Tap Item */
-.nav-tab-item {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 20px;
-    background: transparent;
-    border: none;
-    border-bottom: 2px solid transparent;
-    cursor: pointer;
-    font-size: 0.92rem;
-    font-weight: 600;
-    color: #64748b;
-    transition: all 0.2s ease-in-out;
-    white-space: nowrap;
-    position: relative;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-}
+    /* แต่ละ Tap Item */
+    .nav-tab-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 20px;
+        background: transparent;
+        border: none;
+        border-bottom: 2px solid transparent;
+        cursor: pointer;
+        font-size: 0.92rem;
+        font-weight: 600;
+        color: #64748b;
+        transition: all 0.2s ease-in-out;
+        white-space: nowrap;
+        position: relative;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+    }
 
-.nav-tab-item:hover {
-    background-color: #f8fafc;
-}
+    .nav-tab-item:hover {
+        background-color: #f8fafc;
+    }
 
-/* ตัวเลขสถิติ Pill Badge ด้านขวา */
-.tab-count {
-    background-color: #f1f5f9;
-    color: #475569;
-    padding: 3px 10px;
-    border-radius: 12px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    margin-left: 4px;
-}
+    /* ตัวเลขสถิติ Pill Badge ด้านขวา */
+    .tab-count {
+        background-color: #f1f5f9;
+        color: #475569;
+        padding: 3px 10px;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-left: 4px;
+    }
 
-/* เส้นกั้นแบ่งระหว่างปุ่ม */
-.tab-divider {
-    width: 1px;
-    height: 20px;
-    background-color: #e2e8f0;
-    margin: 0 4px;
-}
+    /* เส้นกั้นแบ่งระหว่างปุ่ม */
+    .tab-divider {
+        width: 1px;
+        height: 20px;
+        background-color: #e2e8f0;
+        margin: 0 4px;
+    }
 
-/* สีของข้อความและไอคอนแต่ละสถานะ */
-.nav-tab-item .tab-icon { color: #8b5cf6; }
-.nav-tab-item.status-pending { color: #f59e0b; }
-.nav-tab-item.status-pending .tab-icon { color: #f59e0b; }
+    /* สีของข้อความและไอคอนแต่ละสถานะ */
+    .nav-tab-item .tab-icon {
+        color: #8b5cf6;
+    }
 
-.nav-tab-item.status-processing { color: #3b82f6; }
-.nav-tab-item.status-processing .tab-icon { color: #3b82f6; }
+    .nav-tab-item.status-pending {
+        color: #f59e0b;
+    }
 
-.nav-tab-item.status-reject { color: #ef4444; }
-.nav-tab-item.status-reject .tab-icon { color: #ef4444; }
+    .nav-tab-item.status-pending .tab-icon {
+        color: #f59e0b;
+    }
 
-.nav-tab-item.status-paid { color: #10b981; }
-.nav-tab-item.status-paid .tab-icon { color: #10b981; }
+    .nav-tab-item.status-processing {
+        color: #3b82f6;
+    }
 
-.nav-tab-item.status-cancel { color: #64748b; }
-.nav-tab-item.status-cancel .tab-icon { color: #64748b; }
+    .nav-tab-item.status-processing .tab-icon {
+        color: #3b82f6;
+    }
 
-/* Active State (สถานะที่กำลังถูกเลือกอยู่) */
-.nav-tab-item.active {
-    background-color: #f5f3ff !important;
-    border-bottom-color: #7c3aed !important;
-    color: #6d28d9 !important;
-}
+    .nav-tab-item.status-reject {
+        color: #ef4444;
+    }
 
-.nav-tab-item.active .tab-icon {
-    color: #6d28d9 !important;
-}
+    .nav-tab-item.status-reject .tab-icon {
+        color: #ef4444;
+    }
 
-.nav-tab-item.active .tab-count {
-    background-color: #ffffff;
-    color: #6d28d9;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-}
+    .nav-tab-item.status-paid {
+        color: #10b981;
+    }
+
+    .nav-tab-item.status-paid .tab-icon {
+        color: #10b981;
+    }
+
+    .nav-tab-item.status-cancel {
+        color: #64748b;
+    }
+
+    .nav-tab-item.status-cancel .tab-icon {
+        color: #64748b;
+    }
+
+    /* Active State (สถานะที่กำลังถูกเลือกอยู่) */
+    .nav-tab-item.active {
+        background-color: #f5f3ff !important;
+        border-bottom-color: #7c3aed !important;
+        color: #6d28d9 !important;
+    }
+
+    .nav-tab-item.active .tab-icon {
+        color: #6d28d9 !important;
+    }
+
+    .nav-tab-item.active .tab-count {
+        background-color: #ffffff;
+        color: #6d28d9;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
 </style>
 
 <body>
@@ -382,6 +411,7 @@ include("../config/dbcloseconnect.php");
 
     <!-- ── Modals (not inside table) ── -->
     <!-- Check / Processing Modal -->
+
     <div class="modal fade" id="ResultModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content border-0 shadow">
@@ -394,7 +424,26 @@ include("../config/dbcloseconnect.php");
                     <hr>
                     <?php if ($_SESSION['role'] != 'CS'): ?>
                         <h6 class="fw-bold mb-2" style="color:var(--purple-700);">🔗 ข้อมูลจาก ERP</h6>
-                        <div id="data_shiftsoft"></div>
+                        <div id="data_shiftsoft">
+                            <form action="select_item.php" method="POST" id="select_form">
+
+                                <!-- พื้นที่สำหรับแสดงรายการ Dynamic Rows -->
+                                <div id="machine_list_container"></div>
+
+                                <!-- Hidden Inputs ค่าเลือกหลัก -->
+                                <input type="hidden" id="select_icdate" name="select_icdate">
+                                <input type="hidden" id="select_icno" name="select_icno">
+                                <input type="hidden" id="select_machineno" name="select_machineno">
+                                <input type="hidden" id="select_apno" name="select_apno">
+                                <input type="hidden" id="select_apdate" name="select_apdate">
+                                <input type="hidden" id="item_id" name="item_id">
+                                <input type="hidden" id="lastmachine_no" name="lastmachine_no">
+                                <input type="hidden" id="select_con_contractdate" name="select_con_contractdate">
+                                <input type="hidden" id="select_con_contractno" name="select_con_contractno">
+                                <input type="hidden" id="select_hpcarprice" name="select_hpcarprice">
+                                <input type="hidden" id="select_grandtotal" name="select_grandtotal">
+                            </form>
+                        </div>
                     <?php endif; ?>
                 </div>
                 <div class="modal-footer border-0">
@@ -406,6 +455,57 @@ include("../config/dbcloseconnect.php");
         </div>
     </div>
 
+    <!-- Template ซ่อนไว้สำหรับคัดลอกสร้างแต่ละแถว (Row Template) -->
+    <template id="machine_row_template">
+        <div class="machine-option">
+            <div class="row fw-bold mb-2">
+                <div class="col-3">วันที่</div>
+                <div class="col-3">เลขที่ใบรับ</div>
+                <div class="col-3">เลขถัง</div>
+                <div class="col-3 text-center">ยอดเงินรับรถ</div>
+            </div>
+
+            <div class="row mb-2 align-items-center machine-row">
+                <div class="col-3">
+                    <input class="form-control form-control-sm row-icdate" disabled readonly>
+                </div>
+                <div class="col-3">
+                    <input class="form-control form-control-sm row-icno" disabled readonly>
+                </div>
+                <div class="col-3">
+                    <input class="form-control form-control-sm row-chassisno" disabled readonly>
+                </div>
+                <div class="col-3 text-center">
+                    <input class="form-control form-control-sm row-d_grandtotal" disabled readonly>
+                </div>
+            </div>
+
+            <div class="row fw-bold mb-2">
+                <div class="col-3">วันที่สัญญา</div>
+                <div class="col-3">เลขที่สัญญา</div>
+                <div class="col-3">เงินต้น</div>
+                <div class="col-3 text-center">เลือก</div>
+            </div>
+
+            <div class="row align-items-center machine-selection-row">
+                <div class="col-3">
+                    <input class="form-control form-control-sm row-con_contractdate" disabled readonly>
+                </div>
+                <div class="col-3">
+                    <input class="form-control form-control-sm row-con_contractno" disabled readonly>
+                </div>
+                <div class="col-3">
+                    <input class="form-control form-control-sm row-hp_car_price" disabled readonly>
+                </div>
+                <div class="col-3 text-center">
+                    <input type="checkbox" class="form-check-input row-checkbox" onchange="select_machine(this)">
+                </div>
+                <input type="hidden" class="row-apno">
+                <input type="hidden" class="row-apdate">
+            </div>
+        </div>
+    </template>
+    `
     <!-- Reject Modal -->
     <div class="modal fade" id="CommentModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -429,7 +529,7 @@ include("../config/dbcloseconnect.php");
                                 placeholder="ข้อความตอบกลับแจ้ง dealer" rows="3" required></textarea>
                             <div class="invalid-feedback">กรุณาพิมพ์ข้อความตอบกลับ</div>
                         </div>
-                        <input type="hidden" id="item_id" name="item_id">
+                        <input type="hidden" id="reject_item_id" name="reject_item_id">
                     </div>
                     <div class="modal-footer border-0">
                         <button type="button" class="btn-outline-purple btn" data-bs-dismiss="modal">ปิด</button>
@@ -542,16 +642,8 @@ include("../config/dbcloseconnect.php");
                     }
                 });
             });
-            // $('.btn-status-filter').on('click', function () {
-            //     $('.btn-status-filter').removeClass('btn-purple').addClass('btn-outline-purple');
-            //     $(this).removeClass('btn-outline-purple').addClass('btn-purple');
-
-            //     currentStatus = $(this).data('status');
-            //     console.log("Current status set to:", currentStatus);
-            //     table.ajax.reload();
-            // });
         });
-
+        
         function updateData() {
             location.href = "./updateauto.php";
         }
@@ -575,64 +667,105 @@ include("../config/dbcloseconnect.php");
                     var d = JSON.parse(r);
                     $('#ResultModal').modal('show');
                     $('#data_item').empty();
-                    $('#data_shiftsoft').empty();
+                    $('#machine_list_container').empty();
+                    $('#submit_select').hide();
+                    // $('#machine_list_header').hide();
 
+                    // 1. Render รายการเอกสารดาวน์โหลด
                     var itemAdd = '<ul class="list-unstyled">';
                     var docs = { doc1: 'ใบกำกับภาษีค่ารถ', doc2: 'Commission', doc3: 'เอกสารรับเงินดาวน์', doc4: 'ซับดาวน์', doc5: 'ซับงวด' };
-                    var n = 1;
                     for (var key in docs) {
                         if (d['item'][key]) {
                             itemAdd += '<li><a href="' + _hostname + '/docs/' + d['item'][key] + '" download class="text-decoration-none" style="color:var(--purple-600);">⬇ ' + docs[key] + '</a></li>';
                         }
-                        n++;
                     }
                     itemAdd += '</ul>';
-                    $('#data_item').append(itemAdd);
+                    $('#data_item').html(itemAdd);
 
+                    // 2. Render รายการเครื่องจักรจาก ERP (ใช้ Template HTML)
                     if (d['machine_datas'] && d['machine_datas'].length > 0 && status <= '2') {
                         var mds = d['machine_datas'];
-                        var form = '<form action="select_item.php" method="POST" id="select_form"><div class="row fw-bold mb-2"><div class="col-3">วันที่</div><div class="col-3">เลขที่ใบรับ</div><div class="col-4">เลขถัง</div><div class="col-2 text-center">เลือก</div></div>';
-                        for (var i = 0; i < mds.length; i++) {
-                            var icdate = mds[i].icdate || '';
-                            var apdate = mds[i].apdate || '';
-                            form += '<div class="row mb-2 align-items-center">' +
-                                '<div class="col-3"><input class="form-control form-control-sm" value="' + icdate + '" disabled readonly></div>' +
-                                '<div class="col-3"><input class="form-control form-control-sm" value="' + mds[i].icno + '" disabled readonly></div>' +
-                                '<div class="col-4"><input class="form-control form-control-sm" value="' + mds[i].chassisno + '" disabled readonly></div>' +
-                                '<div class="col-2 text-center"><input type="checkbox" class="form-check-input" name="select_item" id="item_' + i + '" value="' + mds[i].chassisno + '" onchange="select_machine(' + i + ')"></div>' +
-                                '<input type="hidden" id="apno_' + i + '" value="' + mds[i].apno + '">' +
-                                '<input type="hidden" id="apdate_' + i + '" value="' + apdate + '">' +
-                                '<input type="hidden" id="icdate_' + i + '" value="' + icdate + '">' +
-                                '<input type="hidden" id="icno_' + i + '" value="' + mds[i].icno + '">' +
-                                '<input type="hidden" id="machineno_' + i + '" value="' + mds[i].chassisno + '"></div>';
-                        }
-                        form += '<input type="hidden" id="select_icdate" name="select_icdate">' +
-                            '<input type="hidden" id="select_icno" name="select_icno">' +
-                            '<input type="hidden" id="select_machineno" name="select_machineno">' +
-                            '<input type="hidden" id="select_apno" name="select_apno">' +
-                            '<input type="hidden" id="select_apdate" name="select_apdate">' +
-                            '<input type="hidden" id="item_id" name="item_id" value="' + d['item']['id'] + '">' +
-                            '<input type="hidden" id="lastmachine_no" name="lastmachine_no" value="' + d['item']['lastmachine_no'] + '"></form>';
-                        $('#data_shiftsoft').append(form);
-                        document.getElementById('submit_select').style.display = 'inline-block';
+                        var template = document.getElementById('machine_row_template');
+
+                        mds.forEach(function (data, i) {
+                            console.log("Rendering machine data:", data);
+                            var clone = template.content.cloneNode(true);
+                            var icdate = data.icdate || '';
+                            var apdate = data.apdate || '';
+                            var show_contractdate = data.con_contractdate || '';
+                            var show_contractno = data.con_contractno || '';
+                            var show_hp_car_price = data.hp_car_price || '';
+                            var show_d_grandtotal = data.d_grandtotal || '';
+
+                            // ใส่ค่าลงในแต่ละ Element ตาม Class
+                            $(clone).find('.row-icdate').val(icdate);
+                            $(clone).find('.row-icno').val(data.icno);
+                            $(clone).find('.row-chassisno').val(data.chassisno);
+
+                            $(clone).find('.row-con_contractdate').val(show_contractdate);
+                            $(clone).find('.row-con_contractno').val(show_contractno);
+                            $(clone).find('.row-hp_car_price').val(parseFloat(show_hp_car_price).toLocaleString('en-US', {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2
+                            }));
+                            $(clone).find('.row-d_grandtotal').val(parseFloat(show_d_grandtotal).toLocaleString('en-US', {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2
+                            }));
+
+                            // ตั้งค่า Checkbox และ Element ID Dynamic
+                            $(clone).find('.row-checkbox').val(data.chassisno);
+                            $(clone).find('.row-apno').val(data.apno || '');
+                            $(clone).find('.row-apdate').val(apdate);
+
+
+                            $('#machine_list_container').append(clone);
+                        });
+
+                        // กำหนดค่า Hidden Inputs หลักของ Form
+                        $('#item_id').val(d['item']['id']);
+                        $('#lastmachine_no').val(d['item']['lastmachine_no']);
+                        $('#submit_select').css('display', 'inline-block');
+                        // $('#machine_list_header').show();
                     }
                 }
             });
         }
+        function select_machine(checkbox) {
+            var option = checkbox.closest('.machine-option');
+            var displayedRow = option.querySelector('.machine-row');
+            var selectionRow = option.querySelector('.machine-selection-row');
+            var values = {
+                select_machineno: displayedRow.querySelector('.row-chassisno').value,
+                select_icdate: displayedRow.querySelector('.row-icdate').value,
+                select_icno: displayedRow.querySelector('.row-icno').value,
+                select_apdate: selectionRow.querySelector('.row-apdate').value,
+                select_apno: selectionRow.querySelector('.row-apno').value,
+                select_con_contractdate: selectionRow.querySelector('.row-con_contractdate').value,
+                select_con_contractno: selectionRow.querySelector('.row-con_contractno').value,
+                select_hpcarprice: selectionRow.querySelector('.row-hp_car_price').value,
+                select_grandtotal: displayedRow.querySelector('.row-d_grandtotal').value
+            };
 
-        function select_machine(i) {
-            if (document.getElementById('item_' + i).checked) {
-                document.getElementById('select_machineno').value = document.getElementById('machineno_' + i).value;
-                document.getElementById('select_icdate').value = document.getElementById('icdate_' + i).value;
-                document.getElementById('select_icno').value = document.getElementById('icno_' + i).value;
-                document.getElementById('select_apdate').value = document.getElementById('apdate_' + i).value;
-                document.getElementById('select_apno').value = document.getElementById('apno_' + i).value;
-            } else {
-                ['select_machineno', 'select_icdate', 'select_icno', 'select_apdate', 'select_apno'].forEach(function (id) { document.getElementById(id).value = ''; });
+            if (!checkbox.checked) {
+                Object.keys(values).forEach(function (id) { values[id] = ''; });
             }
+            Object.keys(values).forEach(function (id) {
+                document.getElementById(id).value = values[id];
+            });
         }
 
         function confirm_submit() {
+            if (document.querySelectorAll('.row-checkbox:checked').length === 0) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'กรุณาเลือกรายการก่อน',
+                    confirmButtonText: 'ตกลง',
+                    confirmButtonColor: '#6D28D9'
+                });
+                return;
+            }
+
             Swal.fire({
                 title: 'ยืนยันการทำรายการ?', icon: 'warning', showCancelButton: true,
                 confirmButtonText: 'ยืนยัน!', cancelButtonText: 'ปิด',
@@ -641,10 +774,12 @@ include("../config/dbcloseconnect.php");
         }
 
         function confirm_comment(item_id) {
+            console.log("item_id มีค่า", item_id);
             $.ajax({
                 type: "POST", url: 'confirm_comment.php', data: { item_id: item_id },
                 success: function (r) {
                     var d = JSON.parse(r);
+                    console.log("ข้อมูลที่ได้รับจากเซิร์ฟเวอร์", d);
                     $('#data_reject_item').empty();
                     $('#CommentModal').modal('show');
                     var itemAdd = '<ul class="list-unstyled">';
@@ -653,7 +788,7 @@ include("../config/dbcloseconnect.php");
                     itemAdd += '</ul>';
                     $('#data_reject_item').append(itemAdd);
                     $('#reject_machineno').val(d['item']['lastmachine_no']);
-                    $('#item_id').val(d['item']['id']);
+                    $('#reject_item_id').val(d['item']['id']);
                 }
             });
         }

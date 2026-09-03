@@ -18,13 +18,33 @@ $return_datas['item'] = $response;
 
 include("../config/ssDB.php");
 
-$sql = "select d.chassisno,d.stockno as icno,to_char(m.stockdate + interval '543 years', 'YYYY-MM-DD') as icdate,
-		(select b.apbillno from dtlbillings a,mstbillings b where a.apbillno = b.apbillno and a.stockno = d.stockno limit 1) as apno,
-		(select to_char(b.sdtduedate + interval '543 years', 'YYYY-MM-DD') from dtlbillings a,mstbillings b where a.apbillno = b.apbillno and a.stockno = d.stockno limit 1) as apdate
-		from mststocks m,dtlstocks d
-		where m.stockno = d.stockno
-		and m.stocktype in ('IC','IO')
-		and d.chassisno like '%$chassino%'";
+$sql = "SELECT 
+			d.chassisno,
+			d.stockno AS icno,
+			TO_CHAR(m.stockdate + INTERVAL '543 years', 'YYYY-MM-DD') AS icdate,
+			b.apbillno AS apno,
+			TO_CHAR(b.sdtduedate + INTERVAL '543 years', 'YYYY-MM-DD') AS apdate,
+			con.contractno as con_contractno,
+			TO_CHAR(con.contractdate + INTERVAL '543 years', 'YYYY-MM-DD')  as con_contractdate,
+			hp.car_price as hp_car_price,
+			d.grandtotal as d_grandtotal
+		FROM mststocks m
+		JOIN dtlstocks d 
+			ON m.stockno = d.stockno
+		LEFT JOIN hpcontracts_productdetails hp 
+			ON hp.chassisno = d.chassisno
+		LEFT JOIN contracts con 
+			ON con.contractid = hp.contract_id
+		LEFT JOIN LATERAL (
+			SELECT b.apbillno, b.sdtduedate
+			FROM dtlbillings a
+			JOIN mstbillings b 
+				ON a.apbillno = b.apbillno
+			WHERE a.stockno = d.stockno
+			LIMIT 1
+		) b ON true
+		WHERE m.stocktype IN ('IC', 'IO')
+		AND d.chassisno LIKE '%$chassino%';";
 
 $results = pg_query($connection, $sql);
 $sf_datas = pg_fetch_all($results);

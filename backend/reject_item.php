@@ -5,7 +5,7 @@ session_start();
 // ตรวจสอบว่ามีข้อมูลส่งมาแบบ POST หรือไม่
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
-    $id = isset($_POST['item_id']) ? trim($_POST['item_id']) : '';
+    $id = isset($_POST['reject_item_id']) ? trim($_POST['reject_item_id']) : '';
     $reject_machineno = isset($_POST['reject_machineno']) ? trim($_POST['reject_machineno']) : '';
     $comment = isset($_POST['comment']) ? trim($_POST['comment']) : '';
 
