@@ -16,6 +16,16 @@ $chassino = $response->lastmachine_no;
 
 $return_datas['item'] = $response;
 
+// รูปภาพที่ผูกกับเลขที่ AP สำหรับแสดงใน Processing Modal
+$return_datas['ap_pictures'] = [];
+if ($response && !empty($response->ap_no)) {
+	$pic_query = "SELECT filename, original_name FROM ap_pictures WHERE ap_no = $1 ORDER BY created_at";
+	$pic_result = pg_query_params($connections, $pic_query, array($response->ap_no));
+	if ($pic_result) {
+		$return_datas['ap_pictures'] = pg_fetch_all($pic_result) ?: [];
+	}
+}
+
 include("../config/ssDB.php");
 
 $sql = "SELECT 

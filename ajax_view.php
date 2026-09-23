@@ -113,14 +113,30 @@ while ($row = pg_fetch_object($result)) {
         default:
             $status = '—';
     }
-    $year_disp = ((int) substr($row->created_at, 0, 4)) + 543;
-    $date_disp = $year_disp . substr($row->created_at, 4, 7);
 
-    $ap_date_disp = '';
-    if (!$ap_no_empty) {
-        if ($update_thaidate > $row->ap_date || ($update_thaidate == $row->ap_date && $time_h >= 17))
-            $ap_date_disp = $row->ap_date;
-    }
+
+    $created_at = $row->created_at;
+
+    // 1. รับค่าเข้า DateTime
+    $date = new DateTime($created_at);
+
+    // 2. ปรับ Timezone ให้เป็นไทย (Asia/Bangkok)
+    $date->setTimezone(new DateTimeZone('Asia/Bangkok'));
+
+    // 3. แยกแสดงผล 2 คอลัมน์
+    $year_buddhist = (int) $date->format('Y') + 543;
+
+    // คอลัมน์: วันที่บันทึก (เช่น 2569-09-22)
+    $date_disp = $year_buddhist . '-' . $date->format('m-d');
+
+    // คอลัมน์: เวลาบันทึก (เช่น 17:19)
+    $time_disp = $date->format('H:i');
+
+    // $ap_date_disp = '';
+    // if (!$ap_no_empty) {
+    //     if ($update_thaidate > $row->ap_date || ($update_thaidate == $row->ap_date && $time_h >= 17))
+    //         $ap_date_disp = $row->ap_date;
+    // }
 
 
     $badge = ['Pending' => 'badge-pending', 'Processing' => 'badge-processing', 'PaymentPending' => 'badge-payment-pending', 'Paid' => 'badge-paid', 'Reject' => 'badge-reject', 'Cancel' => 'badge-cancel'][$status] ?? '';
@@ -176,12 +192,17 @@ while ($row = pg_fetch_object($result)) {
         </div>";
     }
 
+
+
     // เอกสารจ่าย: show ap_no only when payment date has passed
-    $ap_no_disp = '';
-    if (!$ap_no_empty) {
-        if ($update_thaidate > $row->ap_date || ($update_thaidate == $row->ap_date && $time_h >= 17))
-            $ap_no_disp = htmlspecialchars($row->ap_no);
-    }
+    // $ap_no_disp = '';
+    // if (!$ap_no_empty) {
+    //     if ($update_thaidate > $row->ap_date || ($update_thaidate == $row->ap_date && $time_h >= 17))
+    //         $ap_no_disp = htmlspecialchars($row->ap_no);
+    // }
+
+    $ap_date_disp = htmlspecialchars($row->ap_date ?? '');
+    $ap_no_disp = htmlspecialchars($row->ap_no ?? '');
 
     // จำนวนเงิน (ap_total)
     $amount_disp = '';
@@ -198,6 +219,7 @@ while ($row = pg_fetch_object($result)) {
 
     $data[] = [
         $date_disp,
+        $time_disp,
         htmlspecialchars($row->branchno),
         htmlspecialchars($row->lastmachine_no),
         htmlspecialchars($row->customername),

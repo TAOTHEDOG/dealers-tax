@@ -264,7 +264,7 @@ include("../config/dbcloseconnect.php");
 
             <div class="content-area">
                 <!-- Stat cards -->
-                <div class="row g-3 mb-4">
+                <!-- <div class="row g-3 mb-4">
                     <div class="col-sm-6 col-lg-3">
                         <div class="stat-card card p-3">
                             <div class="d-flex align-items-center gap-3">
@@ -287,7 +287,7 @@ include("../config/dbcloseconnect.php");
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <!-- Table card -->
                 <div class="table-container">
                     <!-- Filter Status Row -->
@@ -391,7 +391,8 @@ include("../config/dbcloseconnect.php");
                                 <tr>
                                     <th>Dealer</th>
                                     <th>สาขา</th>
-                                    <th>วันที่-เวลา</th>
+                                    <th>วันที่บันทึก</th>
+                                    <th>เวลาบันทึก</th>
                                     <th>เลขถัง 6 หลัก</th>
                                     <th>ชื่อลูกค้า</th>
                                     <th>จัดการ</th>
@@ -445,6 +446,12 @@ include("../config/dbcloseconnect.php");
                             </form>
                         </div>
                     <?php endif; ?>
+                    <!-- รูปภาพ AP -->
+                    <div id="ap_picture_section" class="mb-3" style="display:none;">
+                        <hr>
+                        <h6 class="fw-bold mb-2" style="color:var(--purple-700);">📸 รูปภาพ AP</h6>
+                        <div id="ap_picture_list"></div>
+                    </div>
                 </div>
                 <div class="modal-footer border-0">
                     <button type="button" class="btn-outline-purple btn" data-bs-dismiss="modal">ปิด</button>
@@ -594,14 +601,16 @@ include("../config/dbcloseconnect.php");
                 columns: [
                     { data: 0 },                               // Dealer
                     { data: 1, width: '60px' },               // สาขา
-                    { data: 2, width: '105px' },               // วันที่
-                    { data: 3, width: '80px' },               // เลขถัง
-                    { data: 4 },                               // ชื่อลูกค้า
-                    { data: 5, orderable: false },             // จัดการ
-                    { data: 6, width: '110px' },               // สถานะ
-                    { data: 7, width: '100px' },               // วันที่จ่าย
-                    { data: 8, width: '110px' },               // เอกสารจ่าย
-                    { data: 9, width: '100px' },               // จำนวนเงิน
+                    { data: 2, width: '105px' },               // วันที่บันทึก
+                    { data: 3, width: '80px' },               // เวลาบันทึก
+                    { data: 4 },                               // เลขถัง
+                    { data: 5, orderable: false },             // ชื่อลูกค้า
+                    { data: 6, width: '110px' },               // จัดการ
+                    { data: 7, width: '100px' },               // สถานะ
+                    { data: 8, width: '110px' },               // วันที่จ่าย
+                    { data: 9, width: '100px' },               // เอกสาร
+                    { data: 10, width: '60px', orderable: false },  // จำนวนเงิน
+
                 ],
 
                 order: [[2, 'desc']],
@@ -643,7 +652,7 @@ include("../config/dbcloseconnect.php");
                 });
             });
         });
-        
+
         function updateData() {
             location.href = "./updateauto.php";
         }
@@ -667,6 +676,8 @@ include("../config/dbcloseconnect.php");
                     var d = JSON.parse(r);
                     $('#ResultModal').modal('show');
                     $('#data_item').empty();
+                    $('#ap_picture_list').empty();
+                    $('#ap_picture_section').hide();
                     $('#machine_list_container').empty();
                     $('#submit_select').hide();
                     // $('#machine_list_header').hide();
@@ -682,51 +693,66 @@ include("../config/dbcloseconnect.php");
                     itemAdd += '</ul>';
                     $('#data_item').html(itemAdd);
 
-                    // 2. Render รายการเครื่องจักรจาก ERP (ใช้ Template HTML)
-                    if (d['machine_datas'] && d['machine_datas'].length > 0 && status <= '2') {
-                        var mds = d['machine_datas'];
-                        var template = document.getElementById('machine_row_template');
-
-                        mds.forEach(function (data, i) {
-                            console.log("Rendering machine data:", data);
-                            var clone = template.content.cloneNode(true);
-                            var icdate = data.icdate || '';
-                            var apdate = data.apdate || '';
-                            var show_contractdate = data.con_contractdate || '';
-                            var show_contractno = data.con_contractno || '';
-                            var show_hp_car_price = data.hp_car_price || '';
-                            var show_d_grandtotal = data.d_grandtotal || '';
-
-                            // ใส่ค่าลงในแต่ละ Element ตาม Class
-                            $(clone).find('.row-icdate').val(icdate);
-                            $(clone).find('.row-icno').val(data.icno);
-                            $(clone).find('.row-chassisno').val(data.chassisno);
-
-                            $(clone).find('.row-con_contractdate').val(show_contractdate);
-                            $(clone).find('.row-con_contractno').val(show_contractno);
-                            $(clone).find('.row-hp_car_price').val(parseFloat(show_hp_car_price).toLocaleString('en-US', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            }));
-                            $(clone).find('.row-d_grandtotal').val(parseFloat(show_d_grandtotal).toLocaleString('en-US', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            }));
-
-                            // ตั้งค่า Checkbox และ Element ID Dynamic
-                            $(clone).find('.row-checkbox').val(data.chassisno);
-                            $(clone).find('.row-apno').val(data.apno || '');
-                            $(clone).find('.row-apdate').val(apdate);
-
-
-                            $('#machine_list_container').append(clone);
+                    // Render รูปภาพ AP
+                    if (d['ap_pictures'] && d['ap_pictures'].length > 0) {
+                        var pictureAdd = '';
+                        d['ap_pictures'].forEach(function (picture) {
+                            var pictureUrl = _hostname + '/docs/' + encodeURIComponent(picture.filename);
+                            var pictureName = $('<div>').text(picture.original_name).html();
+                            pictureAdd += '<a href="' + pictureUrl + '" target="_blank" rel="noopener noreferrer" class="d-block py-1 text-decoration-none" style="color:var(--purple-600);">⬇ ' + pictureName + '</a>';
                         });
+                        $('#ap_picture_list').html(pictureAdd);
+                        $('#ap_picture_section').show();
+                    }
 
-                        // กำหนดค่า Hidden Inputs หลักของ Form
-                        $('#item_id').val(d['item']['id']);
-                        $('#lastmachine_no').val(d['item']['lastmachine_no']);
+                    // 2. Render รายการเครื่องจักรจาก ERP (ใช้ Template HTML)
+                    var mds = d['machine_datas'];
+                    var template = document.getElementById('machine_row_template');
+
+                    mds.forEach(function (data, i) {
+                        console.log("Rendering machine data:", data);
+                        var clone = template.content.cloneNode(true);
+                        var icdate = data.icdate || '';
+                        var apdate = data.apdate || '';
+                        var show_contractdate = data.con_contractdate || '';
+                        var show_contractno = data.con_contractno || '';
+                        var show_hp_car_price = data.hp_car_price || '';
+                        var show_d_grandtotal = data.d_grandtotal || '';
+
+                        // ใส่ค่าลงในแต่ละ Element ตาม Class
+                        $(clone).find('.row-icdate').val(icdate);
+                        $(clone).find('.row-icno').val(data.icno);
+                        $(clone).find('.row-chassisno').val(data.chassisno);
+
+                        $(clone).find('.row-con_contractdate').val(show_contractdate);
+                        $(clone).find('.row-con_contractno').val(show_contractno);
+                        $(clone).find('.row-hp_car_price').val(parseFloat(show_hp_car_price).toLocaleString('en-US', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                        }));
+
+                        $(clone).find('.row-d_grandtotal').val(parseFloat(show_d_grandtotal).toLocaleString('en-US', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                        }));
+                        // ตั้งค่า Checkbox และ Element ID Dynamic
+                        $(clone).find('.row-checkbox').val(data.chassisno);
+                        $(clone).find('.row-apno').val(data.apno || '');
+                        $(clone).find('.row-apdate').val(apdate);
+
+
+                        $('#machine_list_container').append(clone);
+                    });
+
+                    // กำหนดค่า Hidden Inputs หลักของ Form
+
+                    $('#item_id').val(d['item']['id']);
+                    $('#lastmachine_no').val(d['item']['lastmachine_no']);
+
+                    // $('#machine_list_header').show();
+
+                    if (d['machine_datas'] && d['machine_datas'].length > 0 && status <= '2') {
                         $('#submit_select').css('display', 'inline-block');
-                        // $('#machine_list_header').show();
                     }
                 }
             });

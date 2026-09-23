@@ -15,8 +15,8 @@ if (!isset($_SESSION) || (($_SESSION['role'] != "Accountant") && ($_SESSION['rol
     exit;
 }
 
-$draw   = intval($_POST['draw']   ?? 1);
-$start  = intval($_POST['start']  ?? 0);
+$draw = intval($_POST['draw'] ?? 1);
+$start = intval($_POST['start'] ?? 0);
 $length = intval($_POST['length'] ?? 25);
 $search = pg_escape_string($connections, $_POST['search']['value'] ?? '');
 $status_filter_param = $_POST['status'] ?? 'all';
@@ -76,21 +76,21 @@ $join = "FROM items LEFT JOIN users ON items.dealer_id = users.id";
 
 // Total (unfiltered)
 $r_total = pg_query($connections, "SELECT COUNT(*) $join WHERE $base_filter");
-$total   = (int)pg_fetch_result($r_total, 0, 0);
+$total = (int) pg_fetch_result($r_total, 0, 0);
 
 // Filtered count
-$r_filt   = pg_query($connections, "SELECT COUNT(*) $join WHERE $base_filter $search_filter");
-$filtered = (int)pg_fetch_result($r_filt, 0, 0);
+$r_filt = pg_query($connections, "SELECT COUNT(*) $join WHERE $base_filter $search_filter");
+$filtered = (int) pg_fetch_result($r_filt, 0, 0);
 
 // Data
-$query  = "SELECT items.*, users.dealer, users.name, users.branchgroup
+$query = "SELECT items.*, users.dealer, users.name, users.branchgroup
            $join
            WHERE $base_filter $search_filter
            ORDER BY $orderCol $orderDir
            LIMIT $length OFFSET $start";
 $result = pg_query($connections, $query);
 
-$is_cs    = ($_SESSION['role'] == "CS");
+$is_cs = ($_SESSION['role'] == "CS");
 $is_admin = ($_SESSION['role'] == "Admin");
 $hostname = $hostname ?? '';
 $year_thai = (int) date('Y') + 543;
@@ -100,24 +100,42 @@ $data = [];
 while ($row = pg_fetch_object($result)) {
 
     // Date display
-    $dt       = new DateTime($row->created_at);
-    $ex       = explode('-', $dt->format('Y-m-d'));
-    $disp_d   = (intval($ex[0]) + 543) . '-' . $ex[1] . '-' . $ex[2];
+    $created_at = $row->created_at;
+
+    // 1. รับค่าเข้า DateTime
+    $date = new DateTime($created_at);
+
+    // 2. ปรับ Timezone ให้เป็นไทย (Asia/Bangkok)
+    $date->setTimezone(new DateTimeZone('Asia/Bangkok'));
+
+    // 3. แยกแสดงผล 2 คอลัมน์
+    $year_buddhist = (int) $date->format('Y') + 543;
+
+    // คอลัมน์: วันที่บันทึก (เช่น 2569-09-22)
+    $date_disp = $year_buddhist . '-' . $date->format('m-d');
+
+    // คอลัมน์: เวลาบันทึก (เช่น 17:19)
+    $time_disp = $date->format('H:i');
 
     // Status label
     $status_map = [
-        '1' => 'Pending', '2' => 'Processing', '3' => 'Processing',
-        '4' => 'Edit machineno', '5' => 'Paid', '6' => 'Reject', '7' => 'Cancel'
+        '1' => 'Pending',
+        '2' => 'Processing',
+        '3' => 'Processing',
+        '4' => 'Edit machineno',
+        '5' => 'Paid',
+        '6' => 'Reject',
+        '7' => 'Cancel'
     ];
     $status_label = $status_map[$row->status] ?? '—';
 
     $badge_class = [
-        'Pending'         => 'badge-pending',
-        'Processing'      => 'badge-processing',
-        'Edit machineno'  => 'badge-pending',
-        'Paid'            => 'badge-paid',
-        'Reject'          => 'badge-reject',
-        'Cancel'          => 'badge-reject',
+        'Pending' => 'badge-pending',
+        'Processing' => 'badge-processing',
+        'Edit machineno' => 'badge-pending',
+        'Paid' => 'badge-paid',
+        'Reject' => 'badge-reject',
+        'Cancel' => 'badge-reject',
     ][$status_label] ?? '';
     $status_html = "<span class='badge-status $badge_class'>$status_label</span>";
 
@@ -147,7 +165,7 @@ while ($row = pg_fetch_object($result)) {
 
     // Display AP number, date, and amount
     $ap_no_disp = htmlspecialchars($row->ap_no ?? '');
-    $amount_disp = ($row->ap_total !== null) ? number_format((float)$row->ap_total, 2) . ' ฿' : '';
+    $amount_disp = ($row->ap_total !== null) ? number_format((float) $row->ap_total, 2) . ' ฿' : '';
     $ap_date_disp = htmlspecialchars($row->ap_date ?? '');
     if ($ap_date_disp <= '2569-08-01') {
         $ap_no_disp = '';
@@ -158,7 +176,8 @@ while ($row = pg_fetch_object($result)) {
     $data[] = [
         htmlspecialchars($row->dealer ?? ''),
         htmlspecialchars($row->branchno),
-        $disp_d,
+        $date_disp,
+        $time_disp,
         htmlspecialchars($row->lastmachine_no),
         htmlspecialchars($row->customername),
         $actions,
@@ -173,8 +192,8 @@ include("./../config/ssDBclose.php");
 
 header('Content-Type: application/json');
 echo json_encode([
-    'draw'            => $draw,
-    'recordsTotal'    => $total,
+    'draw' => $draw,
+    'recordsTotal' => $total,
     'recordsFiltered' => $filtered,
-    'data'            => $data,
+    'data' => $data,
 ]);

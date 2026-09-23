@@ -35,7 +35,7 @@ if (!empty($branchList)) {
 $q_processing = pg_query(
     $connections,
     "SELECT COUNT(*) FROM items
-     WHERE status IN ('4') and branchno IN ($branchno)
+     WHERE status IN ('2', '3') and branchno IN ($branchno)
      AND (tax_no <> 'TEST      ' OR tax_no IS NULL)"
 );
 $processing_count = (int) pg_fetch_result($q_processing, 0, 0);
@@ -229,7 +229,7 @@ include("./config/ssDBclose.php");
 
             <div class="content-area">
                 <!-- Stat cards -->
-                <div class="row g-3 mb-4">
+                <!-- <div class="row g-3 mb-4">
                     <div class="col-sm-6 col-lg-3">
                         <div class="stat-card card p-3">
                             <div class="d-flex align-items-center gap-3">
@@ -252,7 +252,7 @@ include("./config/ssDBclose.php");
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- Table card -->
                 <div class="table-container">
@@ -362,6 +362,7 @@ include("./config/ssDBclose.php");
                             <thead>
                                 <tr>
                                     <th>วันที่บันทึก</th>
+                                    <th>เวลาบันทึก</th>
                                     <th>สาขา</th>
                                     <th>เลขถัง</th>
                                     <th>ชื่อ-นามสกุลลูกค้า</th>
@@ -413,16 +414,17 @@ include("./config/ssDBclose.php");
 
                 columns: [
                     { data: 0, width: '100px' },  // วันที่บันทึก
-                    { data: 1, width: '60px' },  // สาขา
-                    { data: 2, width: '90px' },  // เลขถัง
-                    { data: 3, width: '160px' },  // ชื่อลูกค้า
-                    { data: 4, width: '90px', orderable: false },  // ไฟล์แนบ
-                    { data: 5, width: '95px' },  // สถานะ
-                    { data: 6, width: '110px', },  // วันที่จ่าย
-                    { data: 7, width: '95px', },  // เลขที่เอกสารจ่าย
-                    { data: 8, width: '100px', },  // จำนวนเงิน
-                    { data: 9 },  // หมายเหตุ
-                    { data: 10, width: '60px', orderable: false },  // ยกเลิก
+                    { data: 1, width: '100px' },  // เวลา
+                    { data: 2, width: '60px' },  // สาขา
+                    { data: 3, width: '90px' },  // เลขถัง
+                    { data: 4, width: '160px' },  // ชื่อลูกค้า
+                    { data: 5, width: '90px', orderable: false },  // ไฟล์แนบ
+                    { data: 6, width: '95px' },  // สถานะ
+                    { data: 7, width: '110px', },  // วันที่จ่าย
+                    { data: 8, width: '95px', },  // เลขที่เอกสารจ่าย
+                    { data: 9, width: '100px', },  // จำนวนเงิน
+                    { data: 10 },  // หมายเหตุ
+                    { data: 11, width: '60px', orderable: false },  // ยกเลิก
                 ],
 
                 order: [[0, 'desc']],
